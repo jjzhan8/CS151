@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package application;
 
 import javafx.application.Application;
@@ -13,34 +8,44 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	final private String appName = "SortYourLife";
-	
-	private NavigationMenu navigationMenu = new NavigationMenu();
+
+	private StackPane rightSection = new StackPane();
+
 	private WelcomePage welcomePage = new WelcomePage();
 	private NewCategory newCategory = new NewCategory();
 	private NewLocation newLocation = new NewLocation();
-	
-	
-    public void start(Stage primaryStage) throws Exception {
-        
-    	StackPane rightSection = new StackPane();
-    	rightSection.getChildren().addAll(welcomePage, newCategory, newLocation);
-    	rightSection.getChildren().get(0).setVisible(false);
-    	rightSection.getChildren().get(1).setVisible(false);
-    	rightSection.getChildren().get(2).setVisible(true);
 
-    	
-    	HBox mainBkgd = new HBox();
-    	mainBkgd.getChildren().addAll(navigationMenu, rightSection);
-    	
-        Scene scene = new Scene(mainBkgd, 800, 600);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle(appName);
-        primaryStage.show();
-        
-        
-    }
+	private NavigationMenu navigationMenu = new NavigationMenu(choice -> {
+		welcomePage.setVisible("Welcome Page".equals(choice));
+		newCategory.setVisible("New Category Page".equals(choice));
+		newLocation.setVisible("New Location Page".equals(choice));
+	});
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+	public void start(Stage primaryStage) throws Exception {
+
+		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation);
+		initialPage();
+		
+		HBox mainBkgd = new HBox();
+		mainBkgd.getChildren().addAll(navigationMenu, rightSection);
+
+		Scene scene = new Scene(mainBkgd, 800, 600);
+		primaryStage.setScene(scene);
+		primaryStage.setTitle(appName);
+		primaryStage.show();
+
+	}
+
+	public void initialPage() {
+		// initialize with welcome page
+		rightSection.getChildren().get(0).setVisible(true);
+		// other page not visible
+		rightSection.getChildren().get(1).setVisible(false);
+		rightSection.getChildren().get(2).setVisible(false);
+	}
+
+	public static void main(String[] args) {
+
+		launch(args);
+	}
 }
