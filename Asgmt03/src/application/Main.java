@@ -7,30 +7,37 @@ package application;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    public Main() {
-    }
+	final private String appName = "SortYourLife";
+	
+	private NavigationMenu navigationMenu = new NavigationMenu();
+	private WelcomePage welcomePage = new WelcomePage();
+	private NewCategory newCategory = new NewCategory();
+	private NewLocation newLocation = new NewLocation();
+	
+	
+    public void start(Stage primaryStage) throws Exception {
+        
+    	StackPane rightSection = new StackPane();
+    	rightSection.getChildren().addAll(welcomePage, newCategory, newLocation);
+    	rightSection.getChildren().get(0).setVisible(false);
+    	rightSection.getChildren().get(1).setVisible(false);
+    	rightSection.getChildren().get(2).setVisible(true);
 
-    public void start(Stage primaryStage) {
-        try {
-            primaryStage.setTitle("Home");
-            Button newCategory = new Button("New category");
-            Label title = new Label("Welcome to SortYourLife");
-            HBox root = new HBox(15.0);
-            root.getChildren().add(newCategory);
-            root.getChildren().add(title);
-            Scene scene = new Scene(root, 400.0, 400.0);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (Exception var6) {
-            var6.printStackTrace();
-        }
-
+    	
+    	HBox mainBkgd = new HBox();
+    	mainBkgd.getChildren().addAll(navigationMenu, rightSection);
+    	
+        Scene scene = new Scene(mainBkgd, 800, 600);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle(appName);
+        primaryStage.show();
+        
+        
     }
 
     public static void main(String[] args) {
