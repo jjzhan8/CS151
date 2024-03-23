@@ -1,5 +1,6 @@
 package application;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +18,7 @@ public class NewCategory extends VBox {
 	
 	public NewCategory() {
 		super(30); // spacing parameter 30
+		super.setPadding(new Insets(40, 40, 40, 40));
 		
 		Text titleText = new Text("Create New Category");
         titleText.setFont(Font.font("Arial", 30));

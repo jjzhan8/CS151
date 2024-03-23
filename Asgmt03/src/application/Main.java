@@ -14,16 +14,23 @@ public class Main extends Application {
 	private WelcomePage welcomePage = new WelcomePage();
 	private NewCategory newCategory = new NewCategory();
 	private NewLocation newLocation = new NewLocation();
-
-	private NavigationMenu navigationMenu = new NavigationMenu(choice -> {
+	private HomeNavigator homeNavigator = new HomeNavigator(choice -> {
 		welcomePage.setVisible("Welcome Page".equals(choice));
 		newCategory.setVisible("New Category Page".equals(choice));
 		newLocation.setVisible("New Location Page".equals(choice));
 	});
 
-	public void start(Stage primaryStage) throws Exception {
+	private NavigationMenu navigationMenu = new NavigationMenu(choice -> {
+		welcomePage.setVisible("Welcome Page".equals(choice));
+		newCategory.setVisible("New Category Page".equals(choice));
+		newLocation.setVisible("New Location Page".equals(choice));
+		homeNavigator.setVisible(!welcomePage.isVisible());
+	});
+	
 
-		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation);
+	public void start(Stage primaryStage) throws Exception {
+		
+		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation, homeNavigator);
 		initialPage();
 		
 		HBox mainBkgd = new HBox();
@@ -42,6 +49,8 @@ public class Main extends Application {
 		// other page not visible
 		rightSection.getChildren().get(1).setVisible(false);
 		rightSection.getChildren().get(2).setVisible(false);
+		// home navigatior 
+		rightSection.getChildren().get(3).setVisible(false);
 	}
 
 	public static void main(String[] args) {
