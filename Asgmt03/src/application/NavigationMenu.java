@@ -37,7 +37,10 @@ public class NavigationMenu extends VBox{
     private void buttonAction(Consumer<String> choice) {
         button_NewCategory.setOnAction(e -> choice.accept("New Category Page"));
         button_NewLocation.setOnAction(e -> choice.accept("New Location Page"));
-        // ... set actions for other 3 buttons later ...
+        button_NewAsset.setOnAction(e -> choice.accept("New Asset Page"));
+        button_Search.setOnAction(e -> choice.accept("Search Page"));
+        button_Reports.setOnAction(e -> choice.accept("Reports Page"));
+        // ... set actions for all 5 buttons ...
     }
     
     public Button navigationButton(String arg) {
