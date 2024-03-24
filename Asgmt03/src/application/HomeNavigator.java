@@ -6,14 +6,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 
 public class HomeNavigator extends VBox {
-	private HBox line1;
+	
 	private Button homeNavigator;
 
 	public HomeNavigator(Consumer<String> choice) {
@@ -25,18 +24,16 @@ public class HomeNavigator extends VBox {
 
 		homeNavigator = createButton(circle, arrow);
 
-		line1 = new HBox(homeNavigator);
-		line1.setAlignment(Pos.TOP_LEFT);
-
 		initialize();
 		buttonAction(choice);
 	}
 
 	private void initialize() {
-		this.setPrefSize(560, 300);
+		this.setMaxSize(40, 40);
+		
 		this.setAlignment(Pos.TOP_LEFT);
 		// Add contents to the VBox
-		this.getChildren().addAll(line1);
+		this.getChildren().addAll(homeNavigator);
 	}
 
 	public Group arrowShape() {

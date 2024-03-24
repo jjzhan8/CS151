@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -56,6 +57,8 @@ public class NewCategory extends VBox {
 
 		initialize();
 		buttonAction();
+		
+		
 	}
 
 	private void initialize() {
@@ -75,13 +78,13 @@ public class NewCategory extends VBox {
 		nameField.setOnAction(event -> processInput.accept(nameField.getText()));
 		
 		confirm.setOnAction(e -> {
-			System.out.println("button confirm clicked");
+			
 			String name = nameField.getText();
 			if (name.isEmpty()) {
 				// Show an error message if the name is empty
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setHeaderText("Error");
-				alert.setContentText("Please enter a category name.");
+				alert.setContentText("Category name can not be empty!");
 				alert.showAndWait();
 			} else {
 				// Save the category name to a .csv file
@@ -90,7 +93,7 @@ public class NewCategory extends VBox {
 		});
         
 		clear.setOnAction(e -> {
-			System.out.println("button clear clicked");
+			
 			// Clear the text field
 			nameField.clear();
 		});

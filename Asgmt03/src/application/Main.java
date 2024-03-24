@@ -1,6 +1,7 @@
 package application;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -25,6 +26,7 @@ public class Main extends Application {
 		newCategory.setVisible("New Category Page".equals(choice));
 		newLocation.setVisible("New Location Page".equals(choice));
 		homeNavigator.setVisible(!welcomePage.isVisible());
+		
 	});
 	
 
@@ -44,6 +46,7 @@ public class Main extends Application {
 	}
 
 	public void initialPage() {
+		rightSection.setAlignment(Pos.TOP_LEFT);
 		// initialize with welcome page
 		rightSection.getChildren().get(0).setVisible(true);
 		// other page not visible
@@ -51,6 +54,7 @@ public class Main extends Application {
 		rightSection.getChildren().get(2).setVisible(false);
 		// home navigatior 
 		rightSection.getChildren().get(3).setVisible(false);
+		
 	}
 
 	public static void main(String[] args) {
