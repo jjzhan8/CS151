@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -26,6 +27,10 @@ public class NewAsset extends VBox {
 	private final String line1 = "Asset's Name: ";
 	private final String line2 = "Category: ";
 	private final String line3 = "Location: ";
+	private final String line4 = "Purchase date: ";
+	private final String line5 = "Description: ";
+	private final String line6 = "Purchased Value: ";
+	private final String line7 = "Warranty\nExpiration Date";
 	
 
 	public NewAsset() {
@@ -39,6 +44,10 @@ public class NewAsset extends VBox {
         eachLine.add(createTextLine(line1, true));
         eachLine.add(createDropdownList(line2, true));
         eachLine.add(createDropdownList(line3, true));
+        eachLine.add(createDatePicker(line4));
+        eachLine.add(createTextLine(line5, false));
+        eachLine.add(createTextLine(line6, false));
+        eachLine.add(createDatePicker(line7));
         
         Button confirm = createButton("Confirm");
         Button clear = createButton("Clear");
@@ -126,7 +135,7 @@ public class NewAsset extends VBox {
 		// temporary action
 		comboBox.setOnAction(e -> {
 			String selected = comboBox.getValue();
-			System.out.println("Selected item: " + selected);
+			//System.out.println("Selected item: " + selected);
 		});
 
 		res.getChildren().addAll(label, comboBox);
@@ -134,6 +143,17 @@ public class NewAsset extends VBox {
 		return res;
 	}
 
-	
+	private HBox createDatePicker(String arg) {
+		HBox res = new HBox();
+		// label
+		Label label = new Label(arg);
+		label.setFont(Font.font("Arial", 20));
+		
+		DatePicker date = new DatePicker();
+		
+		res.getChildren().addAll(label, date);
+		res.setAlignment(Pos.BASELINE_CENTER);
+		return res;
+	}
 
 }
