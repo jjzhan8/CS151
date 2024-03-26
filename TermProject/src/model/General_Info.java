@@ -1,4 +1,4 @@
-package application;
+package model;
 
 public class General_Info extends Name{
 	String description;

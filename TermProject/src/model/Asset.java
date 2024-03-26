@@ -1,4 +1,4 @@
-package application;
+package model;
 
 public class Asset extends General_Info{
 	private Category category;

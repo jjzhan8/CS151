@@ -1,4 +1,4 @@
-package application;
+package model;
 
 public class Location extends General_Info{
 	
