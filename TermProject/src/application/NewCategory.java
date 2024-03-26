@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.function.Consumer;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -26,7 +25,7 @@ public class NewCategory extends VBox {
 	
 	private HBox line1;
 	private HBox line2;
-	private HBox line3;
+	private HBox last;
 
 	private Button confirm;
 	private Button clear;
@@ -53,33 +52,34 @@ public class NewCategory extends VBox {
 
 		confirm = createButton("Confirm");
 		clear = createButton("Clear");
-		line3 = new HBox(50, confirm, clear);
-		line3.setAlignment(Pos.BASELINE_CENTER);
+		last = new HBox(50, confirm, clear);
+		last.setAlignment(Pos.BASELINE_CENTER);
 
-		initialize();
+		initialize(line1, line2, last);
 		buttonAction();
 		
 		
 	}
 
-	private void initialize() {
+	private void initialize(HBox... arg) {
 		this.setPrefSize(560, 300);
 		this.setAlignment(Pos.TOP_LEFT);
 		// Add contents to the VBox
-		this.getChildren().addAll(line1, line2, line3);
+		this.getChildren().addAll(arg);
 
 		
 	}
 	private void buttonAction() {
+		/*
 		Consumer<String> processInput = input -> {
 		    // Imagine this is a method that processes the input in some way
 		    category = new Category(input);
 		};
-
-		nameField.setOnAction(event -> processInput.accept(nameField.getText()));
+		*/
+		//nameField.setOnAction(event -> processInput.accept(nameField.getText()));
 		
-		confirm.setOnAction(e -> {
-			
+		
+		confirm.setOnAction(e -> {	
 			String name = nameField.getText();
 			if (name.isEmpty()) {
 				// Show an error message if the name is empty
@@ -94,7 +94,6 @@ public class NewCategory extends VBox {
 		});
         
 		clear.setOnAction(e -> {
-			
 			// Clear the text field
 			nameField.clear();
 		});

@@ -15,16 +15,20 @@ public class Main extends Application {
 	private WelcomePage welcomePage = new WelcomePage();
 	private NewCategory newCategory = new NewCategory();
 	private NewLocation newLocation = new NewLocation();
+	private NewAsset newAsset = new NewAsset();
+	
 	private HomeNavigator homeNavigator = new HomeNavigator(choice -> {
 		welcomePage.setVisible("Welcome Page".equals(choice));
 		newCategory.setVisible("New Category Page".equals(choice));
 		newLocation.setVisible("New Location Page".equals(choice));
+		newAsset.setVisible("New Asset".equals(choice));
 	});
 
 	private NavigationMenu navigationMenu = new NavigationMenu(choice -> {
 		welcomePage.setVisible("Welcome Page".equals(choice));
 		newCategory.setVisible("New Category Page".equals(choice));
 		newLocation.setVisible("New Location Page".equals(choice));
+		newAsset.setVisible("New Asset Page".equals(choice));
 		homeNavigator.setVisible(!welcomePage.isVisible());
 		
 	});
@@ -32,8 +36,8 @@ public class Main extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 		
-		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation, homeNavigator);
-		initialPage();
+		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation, newAsset, homeNavigator);
+		initializePage();
 		
 		HBox mainBkgd = new HBox();
 		mainBkgd.getChildren().addAll(navigationMenu, rightSection);
@@ -45,15 +49,16 @@ public class Main extends Application {
 
 	}
 
-	public void initialPage() {
+	public void initializePage() {
 		rightSection.setAlignment(Pos.TOP_LEFT);
 		// initialize with welcome page
 		rightSection.getChildren().get(0).setVisible(true);
 		// other page not visible
 		rightSection.getChildren().get(1).setVisible(false);
 		rightSection.getChildren().get(2).setVisible(false);
-		// home navigatior 
 		rightSection.getChildren().get(3).setVisible(false);
+		// home navigatior 
+		rightSection.getChildren().get(4).setVisible(false);
 		
 	}
 
