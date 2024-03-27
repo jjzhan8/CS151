@@ -5,14 +5,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Location;
@@ -37,27 +35,6 @@ public class NewLocation extends VBox implements LayoutHelper{
 		layout.add(createTextLine(line2));
 		layout.add(lastLine());
 
-		
-		/*
-		 * add action for confirm
-		 */
-		TextField info1 = (TextField) layout.get(1).lookup("#text");
-		TextField info2 = (TextField) layout.get(2).lookup("#text");
-		Consumer<String> processInput = input -> {
-		    location.setName(info1.getText());
-		    location.setDesciption(info2.getText());
-		    location.display();
-		};
-		
-		info1.setOnAction(e -> {
-			location.setName(info1.getText());
-		    location.display();
-		});
-		
-		info1.setOnAction(e -> {
-		    location.setDesciption(info2.getText());
-		    location.display();
-		});
 		
 		initialize(this, layout);
 		

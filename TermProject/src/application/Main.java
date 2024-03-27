@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import model.Category;
 
 public class Main extends Application {
 	final private String appName = "SortYourLife";
