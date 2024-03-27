@@ -1,30 +1,33 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import model.Asset;
+import model.Category;
+import model.Location;
 
-public class NewAsset extends VBox {
+public class NewAsset extends VBox implements LayoutHelper{
 	/**
 	 * This page is VBox object. All page like this will put in StackPane.
 	 * Navigation page on the left could change visibility of page on the right.
 	 */
 	private Asset asset = new Asset();
+	//private ArrayList<String> category = new ArrayList<String>();
+	//private ArrayList<String> location = new ArrayList<String>();
+	private HashMap<String, Category> category = new HashMap<String, Category>();;
+	private HashMap<String, Location> location = new HashMap<String, Location>();
+	private final String file = "asset.csv";
 	
-	private HBox last;
-	private ArrayList<HBox> eachLine;
+	private ArrayList<HBox> layout;
 	private final String title = "Create New Asset";
 	private final String line1 = "Asset's Name: ";
 	private final String line2 = "Category: ";
@@ -39,123 +42,63 @@ public class NewAsset extends VBox {
 		super(30); // spacing parameter 30
 		super.setPadding(new Insets(40, 40, 40, 40));
 		
-		eachLine = new ArrayList<HBox>();
-	
-        eachLine.add(createTitle(title));
-
-        eachLine.add(createTextLine(line1, true));
-        eachLine.add(createDropdownList(line2, true));
-        eachLine.add(createDropdownList(line3, true));
-        eachLine.add(createDatePicker(line4));
-        eachLine.add(createTextLine(line5, false));
-        eachLine.add(createTextLine(line6, false));
-        eachLine.add(createDatePicker(line7));
+		layout = new ArrayList<HBox>();
+		setExample();
+		
+        layout.add(createTitle(title));
+        layout.add(createTextLine(line1, true));
+        layout.add(createDropdownList(line2, category));
+        layout.add(createDropdownList(line3, location));
+        layout.add(createDatePicker(line4));
+        layout.add(createTextLine(line5));
+        layout.add(createTextLine(line6));
+        layout.add(createDatePicker(line7));
+        layout.add(lastLine());
         
-        Button confirm = createButton("Confirm");
-        Button clear = createButton("Clear");
-        last = new HBox(50, confirm, clear);
-        last.setAlignment(Pos.BASELINE_CENTER);
         
-        eachLine.add(last);
         
-		initialize(eachLine);
+		initialize(this, layout);
+		
+		buttonAction(layout);
 	}
 	
-	private void initialize(ArrayList<HBox> arg) {
-		this.setPrefSize(560, 300);
-		this.setAlignment(Pos.TOP_LEFT);
-		// Add contents to the VBox
-		for(HBox itr: arg) {
-			this.getChildren().add(itr);
-		}
-	}
-
-	public Button createButton(String arg) {
-		Button button = new Button(arg);
-
-		button.setStyle("-fx-text-fill: Black; " + "-fx-font-size: 16px; ");
-
-		button.setPrefSize(120, 30);
-
-		return button;
+	public void getInfo() {
+		asset.setName(((TextField) layout.get(1).lookup("#text")).getText());
+		asset.setDesciption(((TextField) layout.get(5).lookup("#text")).getText());
+		asset.setCategory(category.get(((ComboBox<String>) layout.get(2).lookup("#choice")).getValue()));
+		asset.setLocation(location.get(((ComboBox<String>) layout.get(3).lookup("#choice")).getValue()));
+		//asset.setPurchaseDate();
+		//test purchase date: get error message when try to access date value
+		System.out.println(((ComboBox<String>) layout.get(4).lookup("#date")).getValue());
 	}
 	
-	/**
-	 * Create HBox that contain the following: redAsterisk(optional) label
-	 * text(must) text field(must)
-	 */
-	private HBox createTitle(String arg) {
-		HBox title = new HBox();
-		Text titleText = new Text(arg);
-        titleText.setFont(Font.font("Arial", 30));
-        
-        title.getChildren().add(titleText);
-        title.setAlignment(Pos.BASELINE_CENTER);
-        
-        return title;
-	}
-	
-	private HBox createTextLine(String arg, boolean must) {
-		// redAsterisk
-		HBox res = new HBox();
-		if (must) {
-			Label redAsterisk = new Label("*");
-			redAsterisk.setFont(Font.font("Arial", 20));
-			redAsterisk.setTextFill(Color.RED);
+	private void buttonAction(ArrayList<HBox> arg) {
+		((Button)arg.get(arg.size() - 1).getChildren().get(0)).setOnAction(e -> {
 
-			res.getChildren().add(redAsterisk);
-		}
-		// label
-		Label label = new Label(arg);
-		label.setFont(Font.font("Arial", 20));
-		// text field
-		TextField textField = new TextField();
-
-		res.getChildren().addAll(label, textField);
-		res.setAlignment(Pos.BASELINE_CENTER);
-		return res;
-	}
-
-	private HBox createDropdownList(String arg, boolean must) {
-		// redAsterisk
-		HBox res = new HBox();
-		if (must) {
-			Label redAsterisk = new Label("*");
-			redAsterisk.setFont(Font.font("Arial", 20));
-			redAsterisk.setTextFill(Color.RED);
-
-			res.getChildren().add(redAsterisk);
-		}
-		// label
-		Label label = new Label(arg);
-		label.setFont(Font.font("Arial", 20));
-
-		// temporary comboBox
-		ComboBox<String> comboBox = new ComboBox<>();
-		comboBox.getItems().addAll("Example 1", "Example 2");
-		comboBox.setPromptText("Select a " + arg);
-		// temporary action
-		comboBox.setOnAction(e -> {
-			String selected = comboBox.getValue();
-			//System.out.println("Selected item: " + selected);
+			String name = ((TextField)layout.get(1).lookup("#text")).getText();
+			if (name.isEmpty()) {
+				// Show an error message if the name is empty
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setHeaderText("Error");
+				alert.setContentText("Category name can not be empty!");
+				alert.showAndWait();
+			} else {
+				// Save the category name to a .csv file
+				this.getInfo();
+				//saveCategoryToCsv();
+			}
 		});
 
-		res.getChildren().addAll(label, comboBox);
-		res.setAlignment(Pos.BASELINE_CENTER);
-		return res;
 	}
-
-	private HBox createDatePicker(String arg) {
-		HBox res = new HBox();
-		// label
-		Label label = new Label(arg);
-		label.setFont(Font.font("Arial", 20));
+	
+	private void setExample() {
+		Category ex1 = new Category("example category");
+		category.put(ex1.getName(), ex1);
 		
-		DatePicker date = new DatePicker();
+		Location ex2 = new Location("example location", "example description");
+		location.put(ex2.getName(), ex2);
 		
-		res.getChildren().addAll(label, date);
-		res.setAlignment(Pos.BASELINE_CENTER);
-		return res;
 	}
+	
 
 }

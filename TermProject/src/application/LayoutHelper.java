@@ -1,7 +1,7 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -82,12 +82,13 @@ public interface LayoutHelper {
 	}
 	/**
 	 * Create line with drop down list
+	 * @param <E>
 	 * @param <T>
 	 * @param arg
 	 * @param list
 	 * @return
 	 */
-	public default <T> HBox createDropdownList(String arg, List<T> list) {
+	public default <E> HBox createDropdownList(String arg, HashMap<String, E> list) {
 		// redAsterisk
 		HBox res = new HBox();
 
@@ -99,14 +100,21 @@ public interface LayoutHelper {
 
 		// temporary comboBox
 		ComboBox<String> comboBox = new ComboBox<>();
-		comboBox.getItems().addAll("Example 1", "Example 2");
 		comboBox.setPromptText("Select a " + arg);
+		comboBox.setId("choice");
+		
+		for(String itr: list.keySet()) {
+			comboBox.getItems().add(itr);
+		}
+		
 		// temporary action
+		/*
 		comboBox.setOnAction(e -> {
 			String selected = comboBox.getValue();
 			System.out.println("Selected item: " + selected);
 		});
-
+		*/
+		
 		res.getChildren().addAll(label, comboBox);
 		res.setAlignment(Pos.BASELINE_CENTER);
 		return res;
@@ -123,7 +131,8 @@ public interface LayoutHelper {
 		label.setFont(Font.font("Arial", 20));
 		// date picker
 		DatePicker date = new DatePicker();
-
+		date.setId("date");
+		
 		res.getChildren().addAll(label, date);
 		res.setAlignment(Pos.BASELINE_CENTER);
 
