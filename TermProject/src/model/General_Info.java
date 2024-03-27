@@ -3,6 +3,11 @@ package model;
 public class General_Info extends Name{
 	String description;
 	
+	public General_Info() {
+		super("");
+		this.setDesciption("");
+	}
+	
 	public General_Info(String argN, String argD) {
 		// first argument: name		second argument: description
 		super(argN);

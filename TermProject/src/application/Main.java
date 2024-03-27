@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import model.Category;
 
 public class Main extends Application {
 	final private String appName = "SortYourLife";
@@ -16,7 +17,7 @@ public class Main extends Application {
 	private NewCategory newCategory = new NewCategory();
 	private NewLocation newLocation = new NewLocation();
 	private NewAsset newAsset = new NewAsset();
-	
+
 	private HomeNavigator homeNavigator = new HomeNavigator(choice -> {
 		welcomePage.setVisible("Welcome Page".equals(choice));
 		newCategory.setVisible("New Category Page".equals(choice));
@@ -30,15 +31,14 @@ public class Main extends Application {
 		newLocation.setVisible("New Location Page".equals(choice));
 		newAsset.setVisible("New Asset Page".equals(choice));
 		homeNavigator.setVisible(!welcomePage.isVisible());
-		
+
 	});
-	
 
 	public void start(Stage primaryStage) throws Exception {
-		
+
 		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation, newAsset, homeNavigator);
 		initializePage();
-		
+
 		HBox mainBkgd = new HBox();
 		mainBkgd.getChildren().addAll(navigationMenu, rightSection);
 
@@ -57,9 +57,9 @@ public class Main extends Application {
 		rightSection.getChildren().get(1).setVisible(false);
 		rightSection.getChildren().get(2).setVisible(false);
 		rightSection.getChildren().get(3).setVisible(false);
-		// home navigatior 
+		// home navigatior
 		rightSection.getChildren().get(4).setVisible(false);
-		
+
 	}
 
 	public static void main(String[] args) {

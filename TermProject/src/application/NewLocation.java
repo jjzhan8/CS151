@@ -1,23 +1,27 @@
 package application;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import model.Location;
 
-public class NewLocation extends VBox {
-
-	private HBox last;
-	private ArrayList<HBox> eachLine;
+public class NewLocation extends VBox implements LayoutHelper{
+	private Location location = new Location();
+	private final String file = "location.csv";
+	
+	private ArrayList<HBox> layout;
 	private final String title = "Create New Location";
 	private final String line1 = "Location's name: ";
 	private final String line2 = "Description: ";
@@ -26,100 +30,96 @@ public class NewLocation extends VBox {
 		super(30); // spacing parameter 30
 		super.setPadding(new Insets(40, 40, 40, 40));
 
-		eachLine = new ArrayList<HBox>();
+		layout = new ArrayList<HBox>();
 
-		eachLine.add(createTitle(title));
-		eachLine.add(createTextLine(line1, true));
-		eachLine.add(createTextLine(line2, false));
-		
+		layout.add(createTitle(title));
+		layout.add(createTextLine(line1, true));
+		layout.add(createTextLine(line2));
+		layout.add(lastLine());
 
-		Button confirm = createButton("Confirm");
-		Button clear = createButton("Clear");
-		last = new HBox(50, confirm, clear);
-		last.setAlignment(Pos.BASELINE_CENTER);
 		
 		/*
 		 * add action for confirm
 		 */
+		TextField info1 = (TextField) layout.get(1).lookup("#text");
+		TextField info2 = (TextField) layout.get(2).lookup("#text");
+		Consumer<String> processInput = input -> {
+		    location.setName(info1.getText());
+		    location.setDesciption(info2.getText());
+		    location.display();
+		};
 		
-		clear.setOnAction(e -> {
-			TextField temp;
-			temp = (TextField) eachLine.get(1).lookup("#text");
-			temp.clear();
-			
-			temp = (TextField) eachLine.get(2).lookup("#text");
-			temp.clear();
+		info1.setOnAction(e -> {
+			location.setName(info1.getText());
+		    location.display();
 		});
 		
+		info1.setOnAction(e -> {
+		    location.setDesciption(info2.getText());
+		    location.display();
+		});
 		
+		initialize(this, layout);
 		
-		eachLine.add(last);
-
-		initialize(eachLine);
-	}
-
-	private void initialize(ArrayList<HBox> arg) {
-		this.setPrefSize(560, 300);
-		this.setAlignment(Pos.TOP_LEFT);
-		// Add contents to the VBox
-		for (HBox itr : arg) {
-			this.getChildren().add(itr);
-		}
-	}
-
-	public Button createButton(String arg) {
-		Button button = new Button(arg);
-
-		button.setStyle("-fx-text-fill: Black; " + "-fx-font-size: 16px; ");
-
-		button.setPrefSize(120, 30);
-
-		return button;
+		clearButtonAction(layout, 1, 2);
+		buttonAction(layout);
 	}
 	
-	private void clearTextField(TextField...fields) {
-		for(TextField itr: fields) {
-			itr.clear();
+	public void getInfo() {
+		location.setName(((TextField) layout.get(1).lookup("#text")).getText());
+		location.setDesciption(((TextField) layout.get(2).lookup("#text")).getText());
+	}
+	
+	private void buttonAction(ArrayList<HBox> arg) {
+		((Button)arg.get(arg.size() - 1).getChildren().get(0)).setOnAction(e -> {
+
+			String name = ((TextField)layout.get(1).lookup("#text")).getText();
+			if (name.isEmpty()) {
+				// Show an error message if the name is empty
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setHeaderText("Error");
+				alert.setContentText("Category name can not be empty!");
+				alert.showAndWait();
+			} else {
+				// Save the category name to a .csv file
+				this.getInfo();
+				saveCategoryToCsv();
+			}
+		});
+
+	}
+	
+	private void saveCategoryToCsv() {
+		try {
+			// Check if the file exists
+			if (Files.exists(Paths.get(file))) {
+				// If it exists, append the new category to the file
+				try (FileWriter writer = new FileWriter(file, true)) {
+					writer.append("\n");
+					writer.append(location.saveToCsv());
+				}
+			} else {
+				// If the file doesn't exist, create it and write the header row
+				try (FileWriter writer = new FileWriter(file)) {
+					writer.append("Location Name,Description");
+				}
+
+				// Then append the new category to the file
+				saveCategoryToCsv();
+			}
+
+			// Show a success message
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Success");
+			alert.setContentText("Location created successfully.");
+			alert.showAndWait();
+		} catch (IOException ex) {
+			// Show an error message if there was a problem saving the category
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("Error");
+			alert.setContentText("There was a problem saving the location.");
+			alert.showAndWait();
 		}
 	}
-
-	/**
-	 * Create HBox that contain the following: redAsterisk(optional) label
-	 * text(must) text field(must)
-	 */
-	private HBox createTitle(String arg) {
-		HBox title = new HBox();
-		Text titleText = new Text(arg);
-		titleText.setFont(Font.font("Arial", 30));
-
-		title.getChildren().add(titleText);
-		title.setAlignment(Pos.BASELINE_CENTER);
-
-		return title;
-	}
-
-	private HBox createTextLine(String arg, boolean must) {
-		// redAsterisk
-		HBox res = new HBox();
-		if (must) {
-			Label redAsterisk = new Label("*");
-			redAsterisk.setFont(Font.font("Arial", 20));
-			redAsterisk.setTextFill(Color.RED);
-
-			res.getChildren().add(redAsterisk);
-		}
-		// label
-		Label label = new Label(arg);
-		label.setFont(Font.font("Arial", 20));
-		// text field
-		TextField textField = new TextField();
-		textField.setId("text");
-
-		res.getChildren().addAll(label, textField);
-		res.setAlignment(Pos.BASELINE_CENTER);
-		return res;
-	}
-
-
 
 }

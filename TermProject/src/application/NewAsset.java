@@ -14,12 +14,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.Asset;
 
 public class NewAsset extends VBox {
 	/**
 	 * This page is VBox object. All page like this will put in StackPane.
 	 * Navigation page on the left could change visibility of page on the right.
 	 */
+	private Asset asset = new Asset();
 	
 	private HBox last;
 	private ArrayList<HBox> eachLine;

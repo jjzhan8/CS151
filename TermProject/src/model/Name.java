@@ -3,6 +3,9 @@ package model;
 public class Name {
 	private String name;
 	
+	public Name() {
+		this.name = "";
+	}
 	public Name(String arg) {
 		this.setName(arg);
 	}
