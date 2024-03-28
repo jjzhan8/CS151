@@ -11,7 +11,7 @@ public class General_Info extends Name{
 	public General_Info(String argN, String argD) {
 		// first argument: name		second argument: description
 		super(argN);
-		
+		this.setDesciption(argD);
 	}
 	//accessor & mutator
 	public void setDesciption(String arg) {

@@ -31,6 +31,19 @@ public interface LayoutHelper {
 		}
 	}
 	/**
+	 * Program interface
+	 * @param page
+	 * @param line
+	 */
+	public default void initialize(VBox page, HBox...line) {
+		page.setPrefSize(560, 300);
+		page.setAlignment(Pos.TOP_CENTER);
+		// Add contents to the VBox
+		for (HBox itr : line) {
+			page.getChildren().add(itr);
+		}
+	}
+	/**
 	 * Create HBox as line on the page. This method is for Title on the page.
 	 * @param arg
 	 * @return
@@ -46,6 +59,18 @@ public interface LayoutHelper {
 		return title;
 	}
 	/**
+	 * custom label with same format
+	 * @param arg
+	 * @return
+	 */
+	public default Label createLabel(String arg) {
+		Label label = new Label(arg);
+		label.setFont(Font.font("Arial", 20));
+		label.setPrefWidth(190);
+		
+		return label;
+	}
+	/**
 	 * Create line with TextField with redAsterisk.
 	 * @param arg
 	 * @param must
@@ -55,20 +80,17 @@ public interface LayoutHelper {
 		// redAsterisk
 		HBox res = new HBox();
 		if (must) {
-			Label redAsterisk = new Label("*");
-			redAsterisk.setFont(Font.font("Arial", 20));
-			redAsterisk.setTextFill(Color.RED);
-
-			res.getChildren().add(redAsterisk);
+			res.getChildren().add(redAsterisk());
+		}else {
+			res.getChildren().add(emptySpace());
 		}
-		// label
-		Label label = new Label(arg);
-		label.setFont(Font.font("Arial", 20));
+		// label will use createLabel() function
+		
 		// text field
 		TextField textField = new TextField();
 		textField.setId("text");//set id for textField lookup
 
-		res.getChildren().addAll(label, textField);
+		res.getChildren().addAll(createLabel(arg), textField);
 		res.setAlignment(Pos.BASELINE_CENTER);
 		return res;
 	}
@@ -92,12 +114,8 @@ public interface LayoutHelper {
 		// redAsterisk
 		HBox res = new HBox();
 
-		res.getChildren().add(redAsterisk());
-
 		// label
-		Label label = new Label(arg);
-		label.setFont(Font.font("Arial", 20));
-
+		
 		// temporary comboBox
 		ComboBox<String> comboBox = new ComboBox<>();
 		comboBox.setPromptText("Select a " + arg);
@@ -107,15 +125,7 @@ public interface LayoutHelper {
 			comboBox.getItems().add(itr);
 		}
 		
-		// temporary action
-		/*
-		comboBox.setOnAction(e -> {
-			String selected = comboBox.getValue();
-			System.out.println("Selected item: " + selected);
-		});
-		*/
-		
-		res.getChildren().addAll(label, comboBox);
+		res.getChildren().addAll(redAsterisk(), createLabel(arg), comboBox);
 		res.setAlignment(Pos.BASELINE_CENTER);
 		return res;
 	}
@@ -126,14 +136,15 @@ public interface LayoutHelper {
 	 */
 	public default HBox createDatePicker(String arg) {
 		HBox res = new HBox();
+		res.getChildren().add(emptySpace());
 		// label
-		Label label = new Label(arg);
-		label.setFont(Font.font("Arial", 20));
+
 		// date picker
 		DatePicker date = new DatePicker();
 		date.setId("date");
+		date.setPrefWidth(120);
 		
-		res.getChildren().addAll(label, date);
+		res.getChildren().addAll(createLabel(arg), date);
 		res.setAlignment(Pos.BASELINE_CENTER);
 
 		return res;
@@ -189,7 +200,14 @@ public interface LayoutHelper {
 		Label redAsterisk = new Label("*");
 		redAsterisk.setFont(Font.font("Arial", 20));
 		redAsterisk.setTextFill(Color.RED);
-
+		redAsterisk.setPrefWidth(10);
+		
 		return redAsterisk;
+	}
+	public default Label emptySpace() {
+		Label empty = new Label();
+		empty.setPrefWidth(10);
+		
+		return empty;
 	}
 }

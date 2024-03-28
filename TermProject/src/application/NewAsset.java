@@ -67,6 +67,8 @@ public class NewAsset extends VBox implements LayoutHelper{
 		asset.setDesciption(((TextField) layout.get(5).lookup("#text")).getText());
 		asset.setCategory(category.get(((ComboBox<String>) layout.get(2).lookup("#choice")).getValue()));
 		asset.setLocation(location.get(((ComboBox<String>) layout.get(3).lookup("#choice")).getValue()));
+		asset.getCategory().display();
+		asset.getLocation().display();
 		//asset.setPurchaseDate();
 		//test purchase date: get error message when try to access date value
 		System.out.println(((ComboBox<String>) layout.get(4).lookup("#date")).getValue());
@@ -92,12 +94,15 @@ public class NewAsset extends VBox implements LayoutHelper{
 	}
 	
 	private void setExample() {
+		//later will change to read category and location from csv
 		Category ex1 = new Category("example category");
 		category.put(ex1.getName(), ex1);
 		
 		Location ex2 = new Location("example location", "example description");
 		location.put(ex2.getName(), ex2);
 		
+		//ex1.display();
+		//ex2.display();
 	}
 	
 
