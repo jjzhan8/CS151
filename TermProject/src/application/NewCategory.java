@@ -54,7 +54,10 @@ public class NewCategory extends VBox implements LayoutHelper {
 				// Save the category name to a .csv file
 				category.setName(name);
 				saveCategoryToCsv();
+				//clear TextField
+				clearTextField((TextField)arg.get(1).lookup("#text"));
 			}
+			
 		});
 
 	}
@@ -76,6 +79,7 @@ public class NewCategory extends VBox implements LayoutHelper {
 
 				// Then append the new category to the file
 				saveCategoryToCsv();
+				return;
 			}
 
 			// Show a success message

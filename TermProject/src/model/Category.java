@@ -10,7 +10,7 @@ public class Category extends Name implements DataProcess{
 	
 	}
 	public void display() {
-		System.out.println("Location: " + this.getName());
+		System.out.println("Category: " + this.getName());
 	}
 	public String saveToCsv() {
 		String res;

@@ -55,13 +55,16 @@ public class NewLocation extends VBox implements LayoutHelper{
 				// Show an error message if the name is empty
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setHeaderText("Error");
-				alert.setContentText("Category name can not be empty!");
+				alert.setContentText("Location name can not be empty!");
 				alert.showAndWait();
 			} else {
 				// Save the category name to a .csv file
 				this.getInfo();
 				saveCategoryToCsv();
+				//clear TextField
+				clearTextField((TextField)arg.get(1).lookup("#text"), (TextField)arg.get(2).lookup("#text"));
 			}
+			
 		});
 
 	}
@@ -83,6 +86,8 @@ public class NewLocation extends VBox implements LayoutHelper{
 
 				// Then append the new category to the file
 				saveCategoryToCsv();
+				// prevent second msg
+				return;
 			}
 
 			// Show a success message

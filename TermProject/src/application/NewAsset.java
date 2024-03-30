@@ -8,9 +8,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.DoubleStringConverter;
 import model.Asset;
 import model.Category;
 import model.Location;
@@ -21,8 +24,7 @@ public class NewAsset extends VBox implements LayoutHelper{
 	 * Navigation page on the left could change visibility of page on the right.
 	 */
 	private Asset asset = new Asset();
-	//private ArrayList<String> category = new ArrayList<String>();
-	//private ArrayList<String> location = new ArrayList<String>();
+	
 	private HashMap<String, Category> category = new HashMap<String, Category>();;
 	private HashMap<String, Location> location = new HashMap<String, Location>();
 	private final String file = "asset.csv";
@@ -55,25 +57,38 @@ public class NewAsset extends VBox implements LayoutHelper{
         layout.add(createDatePicker(line7));
         layout.add(lastLine());
         
-        
+        //Purchased Value
+        ((TextField)layout.get(6).lookup("#text")).setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
         
 		initialize(this, layout);
-		
+		clearButtonAction(layout, 1, 5, 6);
 		buttonAction(layout);
 	}
 	
+	// getInfo() is in working progress.
 	public void getInfo() {
 		asset.setName(((TextField) layout.get(1).lookup("#text")).getText());
-		asset.setDesciption(((TextField) layout.get(5).lookup("#text")).getText());
+		
 		asset.setCategory(category.get(((ComboBox<String>) layout.get(2).lookup("#choice")).getValue()));
+		
 		asset.setLocation(location.get(((ComboBox<String>) layout.get(3).lookup("#choice")).getValue()));
-		asset.getCategory().display();
-		asset.getLocation().display();
+		
 		//asset.setPurchaseDate();
-		//test purchase date: get error message when try to access date value
-		System.out.println(((ComboBox<String>) layout.get(4).lookup("#date")).getValue());
+		//purchase date as LocalDate
+		asset.setPurchaseDate(((DatePicker)getInput(layout.get(4), "date")).getValue());
+		
+		//description
+		asset.setDesciption(((TextField) layout.get(5).lookup("#text")).getText());
+		//purchase value as Double
+		asset.setPurchaseValue(Double.parseDouble(((TextField) layout.get(6).lookup("#text")).getText()));
+		//Warranty expiration date
+		asset.setWarrantyExpDate(((DatePicker)getInput(layout.get(7), "date")).getValue());
+		
 	}
-	
+	@SuppressWarnings("unchecked")
+	public <E> E getInput(HBox line, String keyword) {
+		return (E)line.lookup("#" + keyword);
+	}
 	private void buttonAction(ArrayList<HBox> arg) {
 		((Button)arg.get(arg.size() - 1).getChildren().get(0)).setOnAction(e -> {
 
@@ -82,12 +97,14 @@ public class NewAsset extends VBox implements LayoutHelper{
 				// Show an error message if the name is empty
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setHeaderText("Error");
-				alert.setContentText("Category name can not be empty!");
+				alert.setContentText("Asset name can not be empty!");
 				alert.showAndWait();
 			} else {
 				// Save the category name to a .csv file
 				this.getInfo();
 				//saveCategoryToCsv();
+				System.out.println(asset.saveToCsv());
+				//
 			}
 		});
 

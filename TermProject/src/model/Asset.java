@@ -1,19 +1,21 @@
 package model;
 
-public class Asset extends General_Info implements DataProcess{
+import java.time.LocalDate;
+
+public class Asset extends General_Info implements DataProcess {
 	private Category category;
 	private Location location;
-	private String purchaseDate;
+	private LocalDate purchaseDate;
 	private Double purchaseValue;
-	private String warrantyExpDate;
+	private LocalDate warrantyExpDate;
 
 	public Asset() {
 		super();
 		this.setCategory(new Category());
 		this.setLocation(new Location());
-		this.setPurchaseDate("");
+		this.setPurchaseDate(null);
 		this.setPurchaseValue(0.0);
-		this.setWarrantyExpDate("");
+		this.setWarrantyExpDate(null);
 
 	}
 
@@ -21,9 +23,9 @@ public class Asset extends General_Info implements DataProcess{
 		super(argN, argD);
 		this.setCategory(argC);
 		this.setLocation(argL);
-		this.setPurchaseDate("");
+		this.setPurchaseDate(null);
 		this.setPurchaseValue(0.0);
-		this.setWarrantyExpDate("");
+		this.setWarrantyExpDate(null);
 
 	}
 
@@ -44,11 +46,11 @@ public class Asset extends General_Info implements DataProcess{
 		return location;
 	}
 
-	public void setPurchaseDate(String arg) {
+	public void setPurchaseDate(LocalDate arg) {
 		purchaseDate = arg;
 	}
 
-	public String getPurchaseDate() {
+	public LocalDate getPurchaseDate() {
 		return purchaseDate;
 	}
 
@@ -60,19 +62,30 @@ public class Asset extends General_Info implements DataProcess{
 		return purchaseValue;
 	}
 
-	public void setWarrantyExpDate(String arg) {
+	public void setWarrantyExpDate(LocalDate arg) {
 		warrantyExpDate = arg;
 	}
 
-	public String getWarrantyExpDate() {
+	public LocalDate getWarrantyExpDate() {
 		return warrantyExpDate;
+	}
+
+	public void display() {
+		System.out.println("Asset name: " + this.getName());
+		System.out.println("Category name: " + this.getCategory().getName());
+		System.out.println("Location name: " + this.getLocation().getName());
+		System.out.println("Purchase Date: " + this.getPurchaseDate().toString());
+		System.out.println("Purchase Value: " + this.getPurchaseValue());
+		System.out.println("Description: " + this.getDescription());
+		//System.out.println("Warranty Expiration Date: " + this.getWarrantyExpDate().toString());
+
 	}
 
 	public String saveToCsv() {
 		String res;
 		res = new String(this.getName() + "," + this.getDescription() + "," + this.getCategory().getName() + ","
-				+ this.getLocation().getName() + "," + this.getPurchaseDate() + "," + this.getPurchaseValue() + ","
-				+ this.getWarrantyExpDate());
+				+ this.getLocation().getName() + "," + this.getPurchaseDate().toString() + "," + this.getPurchaseValue()
+				+ "," + (this.getWarrantyExpDate()).toString());
 
 		return res;
 	}

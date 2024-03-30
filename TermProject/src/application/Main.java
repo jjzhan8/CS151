@@ -16,12 +16,17 @@ public class Main extends Application {
 	private NewCategory newCategory = new NewCategory();
 	private NewLocation newLocation = new NewLocation();
 	private NewAsset newAsset = new NewAsset();
+	
+	//Testing Page for single element
+	//private TestPage test = new TestPage();
 
 	private HomeNavigator homeNavigator = new HomeNavigator(choice -> {
 		welcomePage.setVisible("Welcome Page".equals(choice));
 		newCategory.setVisible("New Category Page".equals(choice));
 		newLocation.setVisible("New Location Page".equals(choice));
 		newAsset.setVisible("New Asset".equals(choice));
+		//test page
+		//test.setVisible("Reports Page".equals(choice));
 	});
 
 	private NavigationMenu navigationMenu = new NavigationMenu(choice -> {
@@ -30,14 +35,18 @@ public class Main extends Application {
 		newLocation.setVisible("New Location Page".equals(choice));
 		newAsset.setVisible("New Asset Page".equals(choice));
 		homeNavigator.setVisible(!welcomePage.isVisible());
-
+		//test page
+		//test.setVisible("Reports Page".equals(choice));
 	});
 
 	public void start(Stage primaryStage) throws Exception {
-
+		
 		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation, newAsset, homeNavigator);
 		initializePage();
 
+		//rightSection.getChildren().add(test);
+		//test.setVisible(false);
+		
 		HBox mainBkgd = new HBox();
 		mainBkgd.getChildren().addAll(navigationMenu, rightSection);
 
@@ -58,7 +67,9 @@ public class Main extends Application {
 		rightSection.getChildren().get(3).setVisible(false);
 		// home navigatior
 		rightSection.getChildren().get(4).setVisible(false);
-
+		
+		//Test page visible
+		
 	}
 
 	public static void main(String[] args) {

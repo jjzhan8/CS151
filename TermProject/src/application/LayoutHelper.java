@@ -89,6 +89,7 @@ public interface LayoutHelper {
 		// text field
 		TextField textField = new TextField();
 		textField.setId("text");//set id for textField lookup
+		textField.setPrefWidth(180);
 
 		res.getChildren().addAll(createLabel(arg), textField);
 		res.setAlignment(Pos.BASELINE_CENTER);
@@ -120,6 +121,7 @@ public interface LayoutHelper {
 		ComboBox<String> comboBox = new ComboBox<>();
 		comboBox.setPromptText("Select a " + arg);
 		comboBox.setId("choice");
+		comboBox.setPrefWidth(180);
 		
 		for(String itr: list.keySet()) {
 			comboBox.getItems().add(itr);
@@ -142,7 +144,7 @@ public interface LayoutHelper {
 		// date picker
 		DatePicker date = new DatePicker();
 		date.setId("date");
-		date.setPrefWidth(120);
+		date.setPrefWidth(180);
 		
 		res.getChildren().addAll(createLabel(arg), date);
 		res.setAlignment(Pos.BASELINE_CENTER);
@@ -175,7 +177,7 @@ public interface LayoutHelper {
 	 * This method help clear Button clear TextField
 	 * @param arg: multiple TextField
 	 */
-	public default void clearTextField(TextField... arg) {
+	public default void clearTextField(TextField...arg) {
 		for (TextField itr : arg) {
 			itr.clear();
 		}
