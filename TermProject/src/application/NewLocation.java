@@ -31,8 +31,8 @@ public class NewLocation extends VBox implements LayoutHelper{
 		layout = new ArrayList<HBox>();
 
 		layout.add(createTitle(title));
-		layout.add(createTextLine(line1, true));
-		layout.add(createTextLine(line2));
+		layout.add(createTextFieldLine(line1, true));
+		layout.add(createTextAreaLine(line2));
 		layout.add(lastLine());
 
 		
@@ -60,7 +60,7 @@ public class NewLocation extends VBox implements LayoutHelper{
 			} else {
 				// Save the category name to a .csv file
 				this.getInfo();
-				saveCategoryToCsv();
+				saveToCsv();
 				//clear TextField
 				clearTextField((TextField)arg.get(1).lookup("#text"), (TextField)arg.get(2).lookup("#text"));
 			}
@@ -69,7 +69,7 @@ public class NewLocation extends VBox implements LayoutHelper{
 
 	}
 	
-	private void saveCategoryToCsv() {
+	private void saveToCsv() {
 		try {
 			// Check if the file exists
 			if (Files.exists(Paths.get(file))) {
@@ -85,7 +85,7 @@ public class NewLocation extends VBox implements LayoutHelper{
 				}
 
 				// Then append the new category to the file
-				saveCategoryToCsv();
+				saveToCsv();
 				// prevent second msg
 				return;
 			}
