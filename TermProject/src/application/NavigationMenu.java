@@ -18,7 +18,7 @@ public class NavigationMenu extends VBox{
         button_NewCategory = navigationButton("New Category");
     	button_NewLocation = navigationButton("New Location");
     	button_NewAsset = navigationButton("New Asset");
-    	button_Management = navigationButton("Management");
+    	button_Management = navigationButton("Management Page");
     	button_Reports = navigationButton("Reports");
         
         initialize();
