@@ -15,7 +15,7 @@ public class Main extends Application {
 	private WelcomePage welcomePage = new WelcomePage();
 	private NewCategory newCategory = new NewCategory();
 	private NewLocation newLocation = new NewLocation();
-	private ManageAsset manageAsset = new ManageAsset();
+	private AssetManagement manageAsset = new AssetManagement();
 	private NewAsset newAsset = new NewAsset();
 	
 	//Testing Page for single element
@@ -36,7 +36,7 @@ public class Main extends Application {
 		newCategory.setVisible("New Category Page".equals(choice));
 		newLocation.setVisible("New Location Page".equals(choice));
 		newAsset.setVisible("New Asset Page".equals(choice));
-		
+		manageAsset.setVisible("Asset Management".equals(choice));
 		homeNavigator.setVisible(!welcomePage.isVisible());
 		//test page
 		//test.setVisible("Reports Page".equals(choice));
