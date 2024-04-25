@@ -9,7 +9,7 @@ public class NavigationMenu extends VBox{
 	private Button button_NewCategory;
 	private Button button_NewLocation;
 	private Button button_NewAsset;
-	private Button button_Search;
+	private Button button_Management;
 	private Button button_Reports;
 	
 	public NavigationMenu(Consumer<String> choice) {
@@ -18,7 +18,7 @@ public class NavigationMenu extends VBox{
         button_NewCategory = navigationButton("New Category");
     	button_NewLocation = navigationButton("New Location");
     	button_NewAsset = navigationButton("New Asset");
-    	button_Search = navigationButton("Search");
+    	button_Management = navigationButton("Management");
     	button_Reports = navigationButton("Reports");
         
         initialize();
@@ -30,7 +30,7 @@ public class NavigationMenu extends VBox{
         this.setStyle("-fx-background-color: rgba(72, 155, 105, 0.7); -fx-padding: 30;");
         this.setMinSize(240, 600);
         // Add buttons to the VBox
-        this.getChildren().addAll(button_NewCategory, button_NewLocation, button_NewAsset, button_Search, button_Reports);
+        this.getChildren().addAll(button_NewCategory, button_NewLocation, button_NewAsset, button_Management, button_Reports);
     }
     
     // set action for button
@@ -38,7 +38,7 @@ public class NavigationMenu extends VBox{
         button_NewCategory.setOnAction(e -> choice.accept("New Category Page"));
         button_NewLocation.setOnAction(e -> choice.accept("New Location Page"));
         button_NewAsset.setOnAction(e -> choice.accept("New Asset Page"));
-        button_Search.setOnAction(e -> choice.accept("Search Page"));
+        button_Management.setOnAction(e -> choice.accept("Management Page"));
         button_Reports.setOnAction(e -> choice.accept("Reports Page"));
         // ... set actions for all 5 buttons ...
     }
