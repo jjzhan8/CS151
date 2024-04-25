@@ -11,6 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.stage.Stage;
 import model.Asset;
 import model.Category;
@@ -112,8 +115,15 @@ public class AssetManagement extends VBox {
         
         DatePicker purchaseDateField = new DatePicker(selectedAsset.getPurchaseDate());
         TextField descriptionField = new TextField(selectedAsset.getDescription());
-        TextField valueField = new TextFormatter<>(new DoubleStringConverter()).getTextField(); // Use TextFormatter for double
-        valueField.setText(String.valueOf(selectedAsset.getPurchaseValue()));
+
+        TextField valueField = new TextField(); //implement textField directly 
+
+        // Create TextFormatter with DoubleStringConverter -> convert text to double values
+        TextFormatter<Double> formatter = new TextFormatter<>(new DoubleStringConverter());
+       
+        valueField.setTextFormatter(formatter); // apply TextFormatter to the TextField
+        valueField.setText(String.valueOf(selectedAsset.getPurchaseValue())); // set the value 
+        
         DatePicker warrantyExpDateField = new DatePicker(selectedAsset.getWarrantyExpDate());
         
         Button saveButton = new Button("Save");
