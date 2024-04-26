@@ -51,7 +51,7 @@ public class Main extends Application {
 		//test.setVisible(false);
 		
 		HBox mainBkgd = new HBox();
-		mainBkgd.getChildren().addAll(navigationMenu, rightSection);
+		mainBkgd.getChildren().addAll(rightSection, navigationMenu);
 
 		Scene scene = new Scene(mainBkgd, 800, 600);
 		primaryStage.setScene(scene);
@@ -61,7 +61,7 @@ public class Main extends Application {
 	}
 
 	public void initializePage() {
-		rightSection.setAlignment(Pos.TOP_LEFT);
+		rightSection.setAlignment(Pos.TOP_RIGHT);
 		// initialize with welcome page
 		rightSection.getChildren().get(0).setVisible(true);
 		// other page not visible

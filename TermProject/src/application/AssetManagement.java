@@ -21,20 +21,21 @@ import model.Asset;
 import model.Category;
 import model.Location;
 
+
 public class AssetManagement extends VBox implements LayoutHelper {
+
     private final String csvFilePath = "assets.csv";
     private TextField searchField;
     private TableView<Asset> assetTable;
 
     public AssetManagement() {
+
         super(30);   //spacing 30
         super.setPadding(new Insets(40, 40, 40, 40));
 
         ArrayList<HBox> layout = new ArrayList<HBox>(); 
-        String title = "";
-		layout.add(createTitle(title ));
-		String line1 = "";
-		layout.add(createTextFieldLine(line1 , true));
+        layout.add(createTitle(title ));
+        layout.add(createTextFieldLine(line1 , true));
 
         // UI components for search and buttons
         searchField = new TextField();
@@ -87,7 +88,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
     private void searchAssets() {
         String query = searchField.getText();
         if (query.isEmpty()) {
-            showAlert(AlertType.WARNING, "Error", "Required field, Enter the asset name ", query);
+            showAlert(AlertType.WARNING, "Error", "Required field", "Enter the asset name ");
             return;
         }
         
@@ -97,7 +98,9 @@ public class AssetManagement extends VBox implements LayoutHelper {
                 .collect(Collectors.toList());
         
         if (matchingAssets.isEmpty()) {
-            showAlert(AlertType.INFORMATION, "No Results", "No assets found matching your search.", query);
+
+            showAlert(AlertType.INFORMATION, "Error", "No Results", "No assets found matching your search.");
+
         } else {
             assetTable.getItems().setAll(matchingAssets);
         }
@@ -106,7 +109,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
     private void editAsset() {
         Asset selectedAsset = assetTable.getSelectionModel().getSelectedItem();
         if (selectedAsset == null) {
-            showAlert(AlertType.WARNING, "Error", "Required field, enter an asset to edit.", csvFilePath);
+            showAlert(AlertType.WARNING, "Error", "Required field", "enter an asset to edit.");
             return;
         }
         
@@ -190,8 +193,8 @@ public class AssetManagement extends VBox implements LayoutHelper {
         saveAssetsToCsv(assets); // Save the updated list to CSV
         
         assetTable.getItems().remove(selectedAsset);
-        
-        showAlert(AlertType.INFORMATION, "Asset Deleted", "The selected asset has been deleted.", csvFilePath);
+        showAlert(AlertType.INFORMATION, "Error", "Asset Deleted", "The selected asset has been deleted.");
+
         
         switchToHomepage(); // Switch to homepage after deletion
     }
@@ -218,7 +221,9 @@ public class AssetManagement extends VBox implements LayoutHelper {
                 }
             }
         } catch (IOException ex) {
-            showAlert(AlertType.ERROR, "Error", "File Read Error", "Unable to read assets from CSV file.");
+
+            showAlert(AlertType.ERROR, "Error", "File Read Error", "Unable to read assets from CSV.");
+
         }
         
         return assets;
