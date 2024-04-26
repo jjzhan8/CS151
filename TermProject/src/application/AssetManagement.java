@@ -19,7 +19,7 @@ import model.Asset;
 import model.Category;
 import model.Location;
 
-public class AssetManagement extends VBox {
+public class AssetManagement extends VBox implements LayoutHelper {
     private final String csvFilePath = "assets.csv";
     private TextField searchField;
     private TableView<Asset> assetTable;
@@ -210,7 +210,7 @@ public class AssetManagement extends VBox {
                 }
             }
         } catch (IOException ex) {
-            showAlert(AlertType.ERROR, "Error", "File Read Error", "Unable to read assets from CSV.");
+            showAlert(AlertType.ERROR, "Error", "File Read Error", "Unable to read assets from CSV file.");
         }
         
         return assets;
