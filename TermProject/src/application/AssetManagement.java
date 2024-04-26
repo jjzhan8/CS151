@@ -9,10 +9,12 @@ import java.util.stream.Collectors;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.stage.Stage;
 import model.Asset;
@@ -28,9 +30,11 @@ public class AssetManagement extends VBox implements LayoutHelper {
         super(30);   //spacing 30
         super.setPadding(new Insets(40, 40, 40, 40));
 
-        layout = new ArrayList<HBox>(); 
-        layout.add(createTitle(title));
-		layout.add(createTextFieldLine(line1, true));
+        ArrayList<HBox> layout = new ArrayList<HBox>(); 
+        String title = "";
+		layout.add(createTitle(title ));
+		String line1 = "";
+		layout.add(createTextFieldLine(line1 , true));
 
         // UI components for search and buttons
         searchField = new TextField();
@@ -83,7 +87,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
     private void searchAssets() {
         String query = searchField.getText();
         if (query.isEmpty()) {
-            showAlert(AlertType.WARNING, "Error", "Required field, Enter the asset name ");
+            showAlert(AlertType.WARNING, "Error", "Required field, Enter the asset name ", query);
             return;
         }
         
@@ -93,7 +97,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
                 .collect(Collectors.toList());
         
         if (matchingAssets.isEmpty()) {
-            showAlert(AlertType.INFORMATION, "No Results", "No assets found matching your search.");
+            showAlert(AlertType.INFORMATION, "No Results", "No assets found matching your search.", query);
         } else {
             assetTable.getItems().setAll(matchingAssets);
         }
@@ -102,7 +106,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
     private void editAsset() {
         Asset selectedAsset = assetTable.getSelectionModel().getSelectedItem();
         if (selectedAsset == null) {
-            showAlert(AlertType.WARNING, "Error", "Required field, enter an asset to edit.");
+            showAlert(AlertType.WARNING, "Error", "Required field, enter an asset to edit.", csvFilePath);
             return;
         }
         
@@ -142,7 +146,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
             selectedAsset.setCategory(new Category(categoryField.getValue()));
             selectedAsset.setLocation(new Location(locationField.getValue(), ""));
             selectedAsset.setPurchaseDate(purchaseDateField.getValue());
-            selectedAsset.setDescription(descriptionField.getText());
+            selectedAsset.setDesciption(descriptionField.getText());
             selectedAsset.setPurchaseValue(Double.parseDouble(valueField.getText()));
             selectedAsset.setWarrantyExpDate(warrantyExpDateField.getValue());
             
@@ -187,7 +191,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
         
         assetTable.getItems().remove(selectedAsset);
         
-        showAlert(AlertType.INFORMATION, "Asset Deleted", "The selected asset has been deleted.");
+        showAlert(AlertType.INFORMATION, "Asset Deleted", "The selected asset has been deleted.", csvFilePath);
         
         switchToHomepage(); // Switch to homepage after deletion
     }
@@ -198,7 +202,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
         try {
             if (Files.exists(Paths.get(csvFilePath))) {
                 List<String> lines = Files.readAllLines(Paths.get(csvFilePath));
-                for (String line : lines.sublist(1, lines.size())) {
+                for (String line : lines.subList(1, lines.size())) {
                     String[] parts = line.split(","); // Ensure parsing is robust
                     if (parts.length >= 7) { // Ensure required data fields
                         Asset asset = new Asset();
@@ -206,7 +210,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
                         asset.setCategory(new Category(parts[1]));
                         asset.setLocation(new Location(parts[2], ""));
                         asset.setPurchaseDate(LocalDate.parse(parts[3]));
-                        asset.setDescription(parts[4]);
+                        asset.setDesciption(parts[4]);
                         asset.setPurchaseValue(Double.parseDouble(parts[5]));
                         asset.setWarrantyExpDate(LocalDate.parse(parts[6]));
                         assets.add(asset);
