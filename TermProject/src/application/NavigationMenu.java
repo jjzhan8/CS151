@@ -18,7 +18,7 @@ public class NavigationMenu extends VBox{
         button_NewCategory = navigationButton("New Category");
     	button_NewLocation = navigationButton("New Location");
     	button_NewAsset = navigationButton("New Asset");
-    	button_Management = navigationButton("Management Page");
+    	button_Management = navigationButton("Management\n       Page");
     	button_Reports = navigationButton("Reports");
         
         initialize();
@@ -47,12 +47,12 @@ public class NavigationMenu extends VBox{
 		Button button = new Button(arg);
 
 		button.setStyle("-fx-background-color: #E1E1D1;" + 
-					 "-fx-background-radius: 50; " + 
+					 "-fx-background-radius: 60; " + 
 					 "-fx-background-insets: 0;" + 
 					 "-fx-text-fill: Black; " + 
-					 "-fx-font-size: 20px; ");
+					 "-fx-font-size: 18px; ");
 
-		button.setPrefSize(180, 50);
+		button.setPrefSize(180, 250);
 
 		return button;
 	}
