@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -52,12 +53,12 @@ public class NewAsset extends VBox implements LayoutHelper{
 		setExample();
 		
         layout.add(createTitle(title));
-        layout.add(createTextLine(line1, true));
+        layout.add(createTextFieldLine(line1, true));
         layout.add(createDropdownList(line2, category));
         layout.add(createDropdownList(line3, location));
         layout.add(createDatePicker(line4));
-        layout.add(createTextLine(line5));
-        layout.add(createTextLine(line6));
+        layout.add(createTextAreaLine(line5));
+        layout.add(createTextFieldLine(line6));
         layout.add(createDatePicker(line7));
         layout.add(lastLine());
         
@@ -82,7 +83,7 @@ public class NewAsset extends VBox implements LayoutHelper{
 		asset.setPurchaseDate(((DatePicker)getInput(layout.get(4), "date")).getValue());
 		
 		//description
-		asset.setDesciption(((TextField) layout.get(5).lookup("#text")).getText());
+		asset.setDesciption(((TextArea) layout.get(5).lookup("#text")).getText());
 		//purchase value as Double
 		asset.setPurchaseValue(Double.parseDouble(((TextField) layout.get(6).lookup("#text")).getText()));
 		//Warranty expiration date

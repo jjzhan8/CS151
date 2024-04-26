@@ -15,6 +15,7 @@ public class Main extends Application {
 	private WelcomePage welcomePage = new WelcomePage();
 	private NewCategory newCategory = new NewCategory();
 	private NewLocation newLocation = new NewLocation();
+	private AssetManagement manageAsset = new AssetManagement();
 	private NewAsset newAsset = new NewAsset();
 	
 	//Testing Page for single element
@@ -25,6 +26,7 @@ public class Main extends Application {
 		newCategory.setVisible("New Category Page".equals(choice));
 		newLocation.setVisible("New Location Page".equals(choice));
 		newAsset.setVisible("New Asset".equals(choice));
+		manageAsset.setVisible("Asset Management".equals(choice));
 		//test page
 		//test.setVisible("Reports Page".equals(choice));
 	});
@@ -34,6 +36,7 @@ public class Main extends Application {
 		newCategory.setVisible("New Category Page".equals(choice));
 		newLocation.setVisible("New Location Page".equals(choice));
 		newAsset.setVisible("New Asset Page".equals(choice));
+		manageAsset.setVisible("Asset Management".equals(choice));
 		homeNavigator.setVisible(!welcomePage.isVisible());
 		//test page
 		//test.setVisible("Reports Page".equals(choice));
@@ -41,14 +44,14 @@ public class Main extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 		
-		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation, newAsset, homeNavigator);
+		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation, newAsset, manageAsset , homeNavigator);
 		initializePage();
 
 		//rightSection.getChildren().add(test);
 		//test.setVisible(false);
 		
 		HBox mainBkgd = new HBox();
-		mainBkgd.getChildren().addAll(navigationMenu, rightSection);
+		mainBkgd.getChildren().addAll(rightSection, navigationMenu);
 
 		Scene scene = new Scene(mainBkgd, 800, 600);
 		primaryStage.setScene(scene);
@@ -58,7 +61,7 @@ public class Main extends Application {
 	}
 
 	public void initializePage() {
-		rightSection.setAlignment(Pos.TOP_LEFT);
+		rightSection.setAlignment(Pos.TOP_RIGHT);
 		// initialize with welcome page
 		rightSection.getChildren().get(0).setVisible(true);
 		// other page not visible
