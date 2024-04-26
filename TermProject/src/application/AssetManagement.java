@@ -34,8 +34,8 @@ public class AssetManagement extends VBox implements LayoutHelper {
         super.setPadding(new Insets(40, 40, 40, 40));
 
         ArrayList<HBox> layout = new ArrayList<HBox>(); 
-        layout.add(createTitle(title ));
-        layout.add(createTextFieldLine(line1 , true));
+        layout.add(createTitle(title));
+        layout.add(createTextFieldLine(line1, true));
 
         // UI components for search and buttons
         searchField = new TextField();
