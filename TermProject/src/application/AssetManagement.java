@@ -21,14 +21,21 @@ import model.Asset;
 import model.Category;
 import model.Location;
 
-public class AssetManagement extends VBox {
+
+public class AssetManagement extends VBox implements LayoutHelper {
+
     private final String csvFilePath = "assets.csv";
     private TextField searchField;
     private TableView<Asset> assetTable;
 
     public AssetManagement() {
-        super(20);
-        super.setPadding(new Insets(20, 20, 20, 20));
+
+        super(30);   //spacing 30
+        super.setPadding(new Insets(40, 40, 40, 40));
+
+        ArrayList<HBox> layout = new ArrayList<HBox>(); 
+        layout.add(createTitle(title ));
+        layout.add(createTextFieldLine(line1 , true));
 
         // UI components for search and buttons
         searchField = new TextField();
@@ -91,7 +98,9 @@ public class AssetManagement extends VBox {
                 .collect(Collectors.toList());
         
         if (matchingAssets.isEmpty()) {
+
             showAlert(AlertType.INFORMATION, "Error", "No Results", "No assets found matching your search.");
+
         } else {
             assetTable.getItems().setAll(matchingAssets);
         }
@@ -184,8 +193,8 @@ public class AssetManagement extends VBox {
         saveAssetsToCsv(assets); // Save the updated list to CSV
         
         assetTable.getItems().remove(selectedAsset);
-        
         showAlert(AlertType.INFORMATION, "Error", "Asset Deleted", "The selected asset has been deleted.");
+
         
         switchToHomepage(); // Switch to homepage after deletion
     }
@@ -212,7 +221,9 @@ public class AssetManagement extends VBox {
                 }
             }
         } catch (IOException ex) {
+
             showAlert(AlertType.ERROR, "Error", "File Read Error", "Unable to read assets from CSV.");
+
         }
         
         return assets;

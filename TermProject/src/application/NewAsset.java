@@ -57,8 +57,8 @@ public class NewAsset extends VBox implements LayoutHelper{
         layout.add(createDropdownList(line2, category));
         layout.add(createDropdownList(line3, location));
         layout.add(createDatePicker(line4));
-        layout.add(createTextAreaLine(line5));
-        layout.add(createTextFieldLine(line6));
+        layout.add(createTextLine(line5));
+        layout.add(createTextLine(line6));
         layout.add(createDatePicker(line7));
         layout.add(lastLine());
         

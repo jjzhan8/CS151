@@ -68,8 +68,10 @@ public class Main extends Application {
 		rightSection.getChildren().get(1).setVisible(false);
 		rightSection.getChildren().get(2).setVisible(false);
 		rightSection.getChildren().get(3).setVisible(false);
-		// home navigatior
 		rightSection.getChildren().get(4).setVisible(false);
+		
+		// home navigatior
+		rightSection.getChildren().get(5).setVisible(false);
 		
 		//Test page visible
 		
