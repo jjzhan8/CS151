@@ -25,8 +25,12 @@ public class AssetManagement extends VBox implements LayoutHelper {
     private TableView<Asset> assetTable;
 
     public AssetManagement() {
-        super(20);
-        super.setPadding(new Insets(20, 20, 20, 20));
+        super(30);   //spacing 30
+        super.setPadding(new Insets(40, 40, 40, 40));
+
+        layout = new ArrayList<HBox>(); 
+        layout.add(createTitle(title));
+		layout.add(createTextFieldLine(line1, true));
 
         // UI components for search and buttons
         searchField = new TextField();
