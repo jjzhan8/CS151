@@ -8,7 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	final private String appName = "SortYourLife";
+	final private String appName = "QuickSort";
 
 	private StackPane rightSection = new StackPane();
 
