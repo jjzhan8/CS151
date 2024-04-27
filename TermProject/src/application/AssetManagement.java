@@ -28,12 +28,17 @@ public class AssetManagement extends VBox implements LayoutHelper {
     private TextField searchField;
     private TableView<Asset> assetTable;
 
+    private ArrayList<HBox> layout;
+    private final String title = "Asset Management";  // Set the title for the asset management 
+    private final String line1 = "Welcome to Asset Management System";  // Welcome line
+   
     public AssetManagement() {
 
         super(30);   //spacing 30
         super.setPadding(new Insets(40, 40, 40, 40));
 
-        ArrayList<HBox> layout = new ArrayList<HBox>(); 
+        layout = new ArrayList<HBox>();
+        
         layout.add(createTitle(title));
         layout.add(createTextFieldLine(line1, true));
 
