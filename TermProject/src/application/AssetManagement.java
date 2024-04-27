@@ -200,7 +200,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
         saveAssetsToCsv(assets); // Save the updated list to CSV
         
         assetTable.getItems().remove(selectedAsset);
-        showAlert(AlertType.INFORMATION, "Asset Deleted", "The selected asset has been deleted.");
+        showAlert(AlertType.INFORMATION, "Completed", "Asset Deleted", "The selected asset has been deleted.");
 
         
         switchToHomepage(); // Switch to homepage after deletion
