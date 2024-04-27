@@ -24,7 +24,7 @@ import model.Location;
 
 public class AssetManagement extends VBox implements LayoutHelper {
 
-    private final String csvFilePath = "assets.csv";
+    private final String csvFilePath = "asset.csv";
     private TextField searchField;
     private TableView<Asset> assetTable;
 
@@ -125,8 +125,10 @@ public class AssetManagement extends VBox implements LayoutHelper {
         locationField.getItems().addAll("Location1", "Location2");
         
         DatePicker purchaseDateField = new DatePicker(selectedAsset.getPurchaseDate());
-        TextField descriptionField = new TextField(selectedAsset.getDescription());
-
+        
+        TextArea descriptionArea = new TextArea(selectedAsset.getDescription()); //replace textField by textArea
+        descriptionArea.setWrapText(true); // text wrapping
+        descriptionArea.setPrefHeight(100); // Set height
         TextField valueField = new TextField(); //implement textField directly 
 
         // Create TextFormatter with DoubleStringConverter -> convert text to double values
@@ -140,7 +142,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
         Button saveButton = new Button("Save");
         saveButton.setOnAction(e -> {
             if (nameField.getText().isEmpty()) {
-                showAlert(AlertType.ERROR, "Error", "Asset Name Required", "Asset name cannot be empty.");
+                showAlert(AlertType.ERROR, "Error", "Required field", "Asset name cannot be empty.");
                 return;
             }
             
@@ -149,7 +151,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
             selectedAsset.setCategory(new Category(categoryField.getValue()));
             selectedAsset.setLocation(new Location(locationField.getValue(), ""));
             selectedAsset.setPurchaseDate(purchaseDateField.getValue());
-            selectedAsset.setDesciption(descriptionField.getText());
+            selectedAsset.setDescription(descriptionArea.getText());
             selectedAsset.setPurchaseValue(Double.parseDouble(valueField.getText()));
             selectedAsset.setWarrantyExpDate(warrantyExpDateField.getValue());
             
@@ -169,7 +171,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
             new HBox(10, new Label("Category:"), categoryField),
             new HBox(10, new Label("Location:"), locationField),
             new HBox(10, new Label("Purchase Date:"), purchaseDateField),
-            new HBox(10, new Label("Description:"), descriptionField),
+            new HBox(10, new Label("Description:"), descriptionArea),
             new HBox(10, new Label("Purchase Value:"), valueField),
             new HBox(10, new Label("Warranty Expiration Date:"), warrantyExpDateField),
             saveButton
@@ -193,7 +195,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
         saveAssetsToCsv(assets); // Save the updated list to CSV
         
         assetTable.getItems().remove(selectedAsset);
-        showAlert(AlertType.INFORMATION, "Error", "Asset Deleted", "The selected asset has been deleted.");
+        showAlert(AlertType.INFORMATION, "Asset Deleted", "The selected asset has been deleted.");
 
         
         switchToHomepage(); // Switch to homepage after deletion
@@ -213,7 +215,7 @@ public class AssetManagement extends VBox implements LayoutHelper {
                         asset.setCategory(new Category(parts[1]));
                         asset.setLocation(new Location(parts[2], ""));
                         asset.setPurchaseDate(LocalDate.parse(parts[3]));
-                        asset.setDesciption(parts[4]);
+                        asset.setDescription(parts[4]);
                         asset.setPurchaseValue(Double.parseDouble(parts[5]));
                         asset.setWarrantyExpDate(LocalDate.parse(parts[6]));
                         assets.add(asset);
