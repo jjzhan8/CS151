@@ -83,7 +83,7 @@ public class NewAsset extends VBox implements LayoutHelper{
 		asset.setPurchaseDate(((DatePicker)getInput(layout.get(4), "date")).getValue());
 		
 		//description
-		asset.setDesciption(((TextArea) layout.get(5).lookup("#text")).getText());
+		asset.setDescription(((TextArea) layout.get(5).lookup("#text")).getText());
 		//purchase value as Double
 		asset.setPurchaseValue(Double.parseDouble(((TextField) layout.get(6).lookup("#text")).getText()));
 		//Warranty expiration date
