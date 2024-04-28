@@ -12,8 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.stage.Stage;
@@ -261,6 +259,14 @@ private void editAsset() {
                 writer.append("\n");
             }
             writer.close();
+            
+            // Show a success message
+            
+            Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Success");
+			alert.setContentText("Asset saved successfully.");
+			alert.showAndWait();
+
         } catch (IOException ex) {
             showAlert(AlertType.ERROR, "Error", "File Write Error", "Unable to save assets to CSV");
         }
