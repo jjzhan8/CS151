@@ -111,47 +111,51 @@ public class AssetManagement extends VBox implements LayoutHelper {
         }
     }
     
-    private void editAsset() {
-        Asset selectedAsset = assetTable.getSelectionModel().getSelectedItem();
-        if (selectedAsset == null) {
-            showAlert(AlertType.WARNING, "Error", "Required field", "enter an asset to edit.");
+private void editAsset() {
+    Asset selectedAsset = assetTable.getSelectionModel().getSelectedItem();
+    if (selectedAsset == null) {
+        showAlert(Alert.AlertType.WARNING, "Warning", "No Asset Selected", "Please select an asset to edit.");
+        return;
+    }
+
+    // Open a new window to edit the asset details
+    Stage editStage = new Stage();
+    VBox editLayout = new VBox(20);
+    editLayout.setPadding(new Insets(20, 20, 20, 20));
+
+    // Text fields for asset details
+    TextField nameField = new TextField(selectedAsset.getName());
+    ComboBox<String> categoryField = new ComboBox<>();
+    categoryField.getItems().addAll("Category1", "Category2");
+    categoryField.setValue(selectedAsset.getCategory().getName());
+
+    ComboBox<String> locationField = new ComboBox<>();
+    locationField.getItems().addAll("Location1", "Location2");
+    locationField.setValue(selectedAsset.getLocation().getName());
+
+    DatePicker purchaseDateField = new DatePicker(selectedAsset.getPurchaseDate());
+
+    TextArea descriptionArea = new TextArea(selectedAsset.getDescription());
+    descriptionArea.setWrapText(true);
+
+    TextField valueField = new TextField();
+    TextFormatter<Double> formatter = new TextFormatter<>(new DoubleStringConverter());
+    valueField.setTextFormatter(formatter);
+    valueField.setText(String.valueOf(selectedAsset.getPurchaseValue()));
+
+    DatePicker warrantyExpDateField = new DatePicker(selectedAsset.getWarrantyExpDate());
+
+    // Save button with action to update the asset and save to CSV
+    Button saveButton = new Button("Save");
+    saveButton.setOnAction(e -> {
+        // Validation
+        if (nameField.getText().isEmpty() || valueField.getText().isEmpty()) {
+            showAlert(AlertType.ERROR, "Error", "Invalid Data", "Asset name and value must not be empty.");
             return;
         }
-        
-        // Open a new window to edit the asset details
-        Stage editStage = new Stage();
-        VBox editLayout = new VBox(20);
-        editLayout.setPadding(new Insets(20, 20, 20, 20));
-        
-        TextField nameField = new TextField(selectedAsset.getName());
-        ComboBox<String> categoryField = new ComboBox<>();
-        ComboBox<String> locationField = new ComboBox<>();
-        categoryField.getItems().addAll("Category1", "Category2");
-        locationField.getItems().addAll("Location1", "Location2");
-        
-        DatePicker purchaseDateField = new DatePicker(selectedAsset.getPurchaseDate());
-        
-        TextArea descriptionArea = new TextArea(selectedAsset.getDescription()); //replace textField by textArea
-        descriptionArea.setWrapText(true); // text wrapping
-        descriptionArea.setPrefHeight(100); // Set height
-        TextField valueField = new TextField(); //implement textField directly 
 
-        // Create TextFormatter with DoubleStringConverter -> convert text to double values
-        TextFormatter<Double> formatter = new TextFormatter<>(new DoubleStringConverter());
-       
-        valueField.setTextFormatter(formatter); // apply TextFormatter to the TextField
-        valueField.setText(String.valueOf(selectedAsset.getPurchaseValue())); // set the value 
-        
-        DatePicker warrantyExpDateField = new DatePicker(selectedAsset.getWarrantyExpDate());
-        
-        Button saveButton = new Button("Save");
-        saveButton.setOnAction(e -> {
-            if (nameField.getText().isEmpty()) {
-                showAlert(AlertType.ERROR, "Error", "Required field", "Asset name cannot be empty.");
-                return;
-            }
-            
-            // Update the selected asset
+        try {
+            // Update asset details
             selectedAsset.setName(nameField.getText());
             selectedAsset.setCategory(new Category(categoryField.getValue()));
             selectedAsset.setLocation(new Location(locationField.getValue(), ""));
@@ -159,33 +163,40 @@ public class AssetManagement extends VBox implements LayoutHelper {
             selectedAsset.setDescription(descriptionArea.getText());
             selectedAsset.setPurchaseValue(Double.parseDouble(valueField.getText()));
             selectedAsset.setWarrantyExpDate(warrantyExpDateField.getValue());
-            
+
+            // Load current assets, find and replace the updated one
             List<Asset> assets = loadAssetsFromCsv();
-            assets.replaceAll(asset -> asset.equals(selectedAsset) ? selectedAsset : asset); // Replace updated asset in the list
-            
-            saveAssetsToCsv(assets); // Save the updated list to CSV
-            
-            editStage.close();
-            
-            switchToHomepage(); // Switch to homepage after editing
-        });
-        
-        editLayout.getChildren().addAll(
-            new Label("Edit Asset"),
-            new HBox(10, new Label("Asset Name:"), nameField),
-            new HBox(10, new Label("Category:"), categoryField),
-            new HBox(10, new Label("Location:"), locationField),
-            new HBox(10, new Label("Purchase Date:"), purchaseDateField),
-            new HBox(10, new Label("Description:"), descriptionArea),
-            new HBox(10, new Label("Purchase Value:"), valueField),
-            new HBox(10, new Label("Warranty Expiration Date:"), warrantyExpDateField),
-            saveButton
-        );
-        
-        Scene editScene = new Scene(editLayout, 300, 300);
-        editStage.setScene(editScene);
-        editStage.showAndWait();
-    }
+            int index = assets.indexOf(selectedAsset);
+            if (index >= 0) {
+                assets.set(index, selectedAsset); // Efficient update
+            }
+
+            saveAssetsToCsv(assets); // Save to CSV
+            assetTable.refresh(); // Refresh the table with updated data
+
+            editStage.close(); // Close the edit window
+        } catch (NumberFormatException ex) {
+            showAlert(AlertType.ERROR, "Error", "Invalid Data", "Purchase value must be a valid number.");
+        }
+    });
+
+    editLayout.getChildren().addAll(
+        new Label("Edit Asset"),
+        new HBox(10, new Label("Asset Name:"), nameField),
+        new HBox(10, new Label("Category:"), categoryField),
+        new HBox(10, new Label("Location:"), locationField),
+        new HBox(10, new Label("Purchase Date:"), purchaseDateField),
+        new HBox(10, new Label("Description:"), descriptionArea),
+        new HBox(10, new Label("Purchase Value:"), valueField),
+        new HBox(10, new Label("Warranty Expiration Date:"), warrantyExpDateField),
+        saveButton
+    );
+
+    Scene editScene = new Scene(editLayout, 500, 400);
+    editStage.setScene(editScene);
+    editStage.showAndWait();
+}
+
     
     private void deleteAsset() {
         Asset selectedAsset = assetTable.getSelectionModel().getSelectedItem();
@@ -203,7 +214,6 @@ public class AssetManagement extends VBox implements LayoutHelper {
         showAlert(AlertType.INFORMATION, "Completed", "Asset Deleted", "The selected asset has been deleted.");
 
         
-        switchToHomepage(); // Switch to homepage after deletion
     }
 
     private List<Asset> loadAssetsFromCsv() {
@@ -216,13 +226,13 @@ public class AssetManagement extends VBox implements LayoutHelper {
                     String[] parts = line.split(","); // Ensure parsing is robust
                     if (parts.length >= 7) { // Ensure required data fields
                         Asset asset = new Asset();
-                        asset.setName(parts[0]);
-                        asset.setCategory(new Category(parts[1]));
-                        asset.setLocation(new Location(parts[2], ""));
-                        asset.setPurchaseDate(LocalDate.parse(parts[3]));
-                        asset.setDescription(parts[4]);
-                        asset.setPurchaseValue(Double.parseDouble(parts[5]));
-                        asset.setWarrantyExpDate(LocalDate.parse(parts[6]));
+                        asset.setName(parts[1]);
+                        asset.setCategory(new Category(parts[2]));
+                        asset.setLocation(new Location(parts[3], ""));
+                        asset.setPurchaseDate(LocalDate.parse(parts[4]));
+                        asset.setDescription(parts[5]);
+                        asset.setPurchaseValue(Double.parseDouble(parts[6]));
+                        asset.setWarrantyExpDate(LocalDate.parse(parts[7]));
                         assets.add(asset);
                     }
                 }
@@ -240,31 +250,23 @@ public class AssetManagement extends VBox implements LayoutHelper {
         try {
             FileWriter writer = new FileWriter(csvFilePath);
             writer.append("Asset Name,Category,Location,Purchase Date,Description,Purchase Value,Warranty Exp Date\n");
-            
             for (Asset asset : assets) {
-                writer.append(String.join(",", 
-                  asset.getName(), 
-                  asset.getCategory().getName(), 
-                  asset.getLocation().getName(),
-                  asset.getPurchaseDate().toString(), 
-                  asset.getDescription(), 
-                  String.valueOf(asset.getPurchaseValue()), 
-                  asset.getWarrantyExpDate().toString()
-                ));
+                writer.append(asset.getName() + "," + 
+                              asset.getCategory().getName() + "," + 
+                              asset.getLocation().getName() + "," +
+                              asset.getPurchaseDate().toString() + "," + 
+                              asset.getDescription() + "," + 
+                              String.valueOf(asset.getPurchaseValue()) + "," + 
+                              asset.getWarrantyExpDate().toString());
                 writer.append("\n");
             }
-            
             writer.close();
         } catch (IOException ex) {
             showAlert(AlertType.ERROR, "Error", "File Write Error", "Unable to save assets to CSV");
         }
     }
 
-    private void switchToHomepage() {
-        // Logic to switch to the homepage
-        System.out.println("Switched to homepage.");
-    }
-
+   
     private void showAlert(AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
