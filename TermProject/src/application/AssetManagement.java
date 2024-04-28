@@ -224,15 +224,15 @@ private void editAsset() {
                 List<String> lines = Files.readAllLines(Paths.get(csvFilePath));
                 for (String line : lines.subList(1, lines.size())) {
                     String[] parts = line.split(","); // Ensure parsing is robust
-                    if (parts.length >= 7) { // Ensure required data fields
+                    if (parts.length >= 6) { // Ensure required data fields
                         Asset asset = new Asset();
-                        asset.setName(parts[1]);
-                        asset.setCategory(new Category(parts[2]));
-                        asset.setLocation(new Location(parts[3], ""));
-                        asset.setPurchaseDate(LocalDate.parse(parts[4]));
-                        asset.setDescription(parts[5]);
-                        asset.setPurchaseValue(Double.parseDouble(parts[6]));
-                        asset.setWarrantyExpDate(LocalDate.parse(parts[7]));
+                        asset.setName(parts[0]);
+                        asset.setCategory(new Category(parts[1]));
+                        asset.setLocation(new Location(parts[2], ""));
+                        asset.setPurchaseDate(LocalDate.parse(parts[3]));
+                        asset.setDescription(parts[4]);
+                        asset.setPurchaseValue(Double.parseDouble(parts[5]));
+                        asset.setWarrantyExpDate(LocalDate.parse(parts[6]));
                         assets.add(asset);
                     }
                 }
