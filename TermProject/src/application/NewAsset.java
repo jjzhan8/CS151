@@ -79,9 +79,14 @@ public class NewAsset extends VBox implements LayoutHelper{
 	public void getInfo() {
 		asset.setName(((TextField) layout.get(1).lookup("#text")).getText());
 		
-		asset.setCategory(category.get(((ComboBox<String>) layout.get(2).lookup("#choice")).getValue()));
 		
-		asset.setLocation(location.get(((ComboBox<String>) layout.get(3).lookup("#choice")).getValue()));
+		//category.get(category).getClass().getName();
+		
+		asset.setCategoryName((String) (((ComboBox) layout.get(2).lookup("#choice")).getValue()));
+		//asset.setCategory(category.);
+		//asset.setCategoryName(category.get(((ComboBox<String>) layout.get(2).lookup("#choice")).getUserData().getClass().getName()));
+		
+		asset.setLocName((String) (((ComboBox) layout.get(3).lookup("#choice")).getValue()));
 		
 		//asset.setPurchaseDate();
 		//purchase date as LocalDate
