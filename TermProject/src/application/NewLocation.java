@@ -45,7 +45,7 @@ public class NewLocation extends VBox implements LayoutHelper{
 	
 	public void getInfo() {
 		location.setName(((TextField) layout.get(1).lookup("#text")).getText());
-		location.setDesciption(((TextArea) layout.get(2).lookup("#text")).getText());
+		location.setDescription(((TextArea) layout.get(2).lookup("#text")).getText());
 	}
 	
 	private void buttonAction(ArrayList<HBox> arg) {
