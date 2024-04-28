@@ -1,4 +1,4 @@
-package application;
+/*package application;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,9 +30,9 @@ public class TestPage extends VBox implements LayoutHelper {
 	 * This page is VBox object. All page like this will put in StackPane.
 	 * Navigation page on the left could change visibility of page on the right.
 	 */
-	private Asset asset = new Asset();
+	/*private Asset asset = new Asset();
 	
-	private HashMap<String, Category> category = new HashMap<String, Category>();;
+	private List<Category> category = new ArrayList<>();
 	private HashMap<String, Location> location = new HashMap<String, Location>();
 	private final String file = "asset.csv";
 	
@@ -58,7 +59,7 @@ public class TestPage extends VBox implements LayoutHelper {
 		layout.add(createTitle(title));
         layout.add(createTextFieldLine(line1, true));
         layout.add(createDropdownList(line2, category));
-        layout.add(createDropdownList(line3, location));
+        layout.add(createLocDropdownList(line3, location));
 		
         //Test how to use DatePicker
 		HBox target = new HBox();
@@ -172,4 +173,4 @@ public class TestPage extends VBox implements LayoutHelper {
 		//ex2.display();
 	}
 
-}
+}*/

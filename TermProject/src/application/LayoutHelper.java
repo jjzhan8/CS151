@@ -2,6 +2,7 @@ package application;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.Category;
+import model.Location;
 
 public interface LayoutHelper {
 	/**
@@ -130,7 +133,7 @@ public interface LayoutHelper {
 	 * @param list
 	 * @return
 	 */
-	public default <E> HBox createDropdownList(String arg, HashMap<String, E> list) {
+	public default <E> HBox createDropdownList(String arg, HashMap<Category, String> list) {
 		// redAsterisk
 		HBox res = new HBox();
 
@@ -142,8 +145,29 @@ public interface LayoutHelper {
 		comboBox.setId("choice");
 		comboBox.setPrefWidth(180);
 		
-		for(String itr: list.keySet()) {
-			comboBox.getItems().add(itr);
+		for(Category itr: list.keySet()) {
+			comboBox.getItems().add(itr.toString());
+		}
+		
+		res.getChildren().addAll(redAsterisk(), createLabel(arg), comboBox);
+		res.setAlignment(Pos.BASELINE_CENTER);
+		return res;
+	}
+	
+	public default <E> HBox createLocDropdownList(String arg, HashMap<Location, String> locMap) {
+		// redAsterisk
+		HBox res = new HBox();
+
+		// label
+		
+		// temporary comboBox
+		ComboBox<String> comboBox = new ComboBox<>();
+		comboBox.setPromptText("Select a " + arg);
+		comboBox.setId("choice");
+		comboBox.setPrefWidth(180);
+		
+		for(Location itr: locMap.keySet()) {
+			comboBox.getItems().add(itr.toString());
 		}
 		
 		res.getChildren().addAll(redAsterisk(), createLabel(arg), comboBox);

@@ -4,8 +4,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -30,8 +32,10 @@ public class NewAsset extends VBox implements LayoutHelper{
 	 */
 	private Asset asset = new Asset();
 	
-	private HashMap<String, Category> category = new HashMap<String, Category>();
-	private HashMap<String, Location> location = new HashMap<String, Location>();
+	private HashMap<Category, String> category = new HashMap<Category, String>();
+	private HashMap<Location, String> location = new HashMap<Location, String>();
+	private final String catFile = "category.csv";
+	private final String locFile = "location.csv";
 	private final String file = "asset.csv";
 	
 	private ArrayList<HBox> layout;
@@ -50,12 +54,13 @@ public class NewAsset extends VBox implements LayoutHelper{
 		super.setPadding(new Insets(40, 40, 40, 40));
 		
 		layout = new ArrayList<HBox>();
-		setExample();
+		getCategories(category);
+		getLocations(location);
 		
         layout.add(createTitle(title));
         layout.add(createTextFieldLine(line1, true));
         layout.add(createDropdownList(line2, category));
-        layout.add(createDropdownList(line3, location));
+        layout.add(createLocDropdownList(line3, location));
         layout.add(createDatePicker(line4));
         layout.add(createTextAreaLine(line5));
         layout.add(createTextFieldLine(line6));
@@ -115,7 +120,7 @@ public class NewAsset extends VBox implements LayoutHelper{
 
 	}
 	
-	private void setExample() {
+/*	private void setExample() {
 		//later will change to read category and location from csv
 		Category ex1 = new Category("example category");
 		category.put(ex1.getName(), ex1);
@@ -125,7 +130,7 @@ public class NewAsset extends VBox implements LayoutHelper{
 		
 		//ex1.display();
 		//ex2.display();
-	}
+	}*/
 	
 	private void saveAssetToCsv() {
 		try {
@@ -162,5 +167,58 @@ public class NewAsset extends VBox implements LayoutHelper{
 		}
 	}
 	
+	private HashMap<Category, String> getCategories(HashMap<Category, String> catMap) {
+		String blank = "";
+	        try {
+	            if (Files.exists(Paths.get(catFile))) {
+	                List<String> lines = Files.readAllLines(Paths.get(catFile));
+	                for (String line : lines.subList(1, lines.size())) {
+	                    String[] parts = line.split(","); // Ensure parsing is robust
+	                    if (parts.length == 1) { // Ensure required data fields
+	                        Category cat = new Category();
+	                        cat.setName(parts[0]);
+	                        catMap.put(cat, blank);
+	                    }
+	                }
+	            }
+	        } catch (IOException ex) {
 
+	            showAlert(AlertType.ERROR, "Error", "File Read Error", "Unable to read assets from CSV.");
+
+	        }
+	        
+	        return catMap;
+	}
+	
+	private HashMap<Location, String> getLocations(HashMap<Location, String> catMap) {
+		String blank = "";
+	        try {
+	            if (Files.exists(Paths.get(locFile))) {
+	                List<String> lines = Files.readAllLines(Paths.get(locFile));
+	                for (String line : lines.subList(1, lines.size())) {
+	                    String[] parts = line.split(","); // Ensure parsing is robust
+	                    if (parts.length == 2) { // Ensure required data fields
+	                        Location loc = new Location();
+	                        loc.setName(parts[0]);
+	                        loc.setDescription(parts[1]);
+	                        catMap.put(loc, blank);
+	                    }
+	                }
+	            }
+	        } catch (IOException ex) {
+
+	            showAlert(AlertType.ERROR, "Error", "File Read Error", "Unable to read assets from CSV.");
+
+	        }
+	        
+	        return catMap;
+	}
+
+	private void showAlert(AlertType type, String title, String header, String content) {
+		Alert alert = new Alert(type);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
 }
