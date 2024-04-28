@@ -8,7 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	final private String appName = "QuickSort";
+	final private String appName = "SortYourLife";
 
 	private StackPane rightSection = new StackPane();
 
@@ -68,10 +68,8 @@ public class Main extends Application {
 		rightSection.getChildren().get(1).setVisible(false);
 		rightSection.getChildren().get(2).setVisible(false);
 		rightSection.getChildren().get(3).setVisible(false);
-		rightSection.getChildren().get(4).setVisible(false);
-		
 		// home navigatior
-		rightSection.getChildren().get(5).setVisible(false);
+		rightSection.getChildren().get(4).setVisible(false);
 		
 		//Test page visible
 		

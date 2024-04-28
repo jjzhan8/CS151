@@ -18,7 +18,7 @@ public class NavigationMenu extends VBox{
         button_NewCategory = navigationButton("New Category");
     	button_NewLocation = navigationButton("New Location");
     	button_NewAsset = navigationButton("New Asset");
-    	button_Management = navigationButton("Manage Asset");
+    	button_Management = navigationButton("Management Page");
     	button_Reports = navigationButton("Reports");
         
         initialize();
@@ -38,7 +38,7 @@ public class NavigationMenu extends VBox{
         button_NewCategory.setOnAction(e -> choice.accept("New Category Page"));
         button_NewLocation.setOnAction(e -> choice.accept("New Location Page"));
         button_NewAsset.setOnAction(e -> choice.accept("New Asset Page"));
-        button_Management.setOnAction(e -> choice.accept("Asset Management"));
+        button_Management.setOnAction(e -> choice.accept("Management Page"));
         button_Reports.setOnAction(e -> choice.accept("Reports Page"));
         // ... set actions for all 5 buttons ...
     }
@@ -47,12 +47,12 @@ public class NavigationMenu extends VBox{
 		Button button = new Button(arg);
 
 		button.setStyle("-fx-background-color: #E1E1D1;" + 
-					 "-fx-background-radius: 60; " + 
+					 "-fx-background-radius: 50; " + 
 					 "-fx-background-insets: 0;" + 
 					 "-fx-text-fill: Black; " + 
-					 "-fx-font-size: 18px; ");
+					 "-fx-font-size: 20px; ");
 
-		button.setPrefSize(180, 250);
+		button.setPrefSize(180, 50);
 
 		return button;
 	}
