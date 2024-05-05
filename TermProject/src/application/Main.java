@@ -17,6 +17,7 @@ public class Main extends Application {
 	private NewLocation newLocation = new NewLocation();
 	private AssetManagement manageAsset = new AssetManagement();
 	private NewAsset newAsset = new NewAsset();
+	private ExpiredAsset expAsset = new ExpiredAsset();
 	
 	//Testing Page for single element
 	//private TestPage test = new TestPage();
@@ -27,6 +28,8 @@ public class Main extends Application {
 		newLocation.setVisible("New Location Page".equals(choice));
 		newAsset.setVisible("New Asset".equals(choice));
 		manageAsset.setVisible("Asset Management".equals(choice));
+		expAsset.setVisible("Expired Assets".equals(choice));
+		
 		//test page
 		//test.setVisible("Reports Page".equals(choice));
 	});
@@ -37,6 +40,7 @@ public class Main extends Application {
 		newLocation.setVisible("New Location Page".equals(choice));
 		newAsset.setVisible("New Asset Page".equals(choice));
 		manageAsset.setVisible("Asset Management".equals(choice));
+		expAsset.setVisible("Expired Assets".equals(choice));
 		homeNavigator.setVisible(!welcomePage.isVisible());
 		//test page
 		//test.setVisible("Reports Page".equals(choice));
@@ -44,7 +48,7 @@ public class Main extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 		
-		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation, newAsset, manageAsset , homeNavigator);
+		rightSection.getChildren().addAll(welcomePage, newCategory, newLocation, newAsset, manageAsset, expAsset, homeNavigator);
 		initializePage();
 
 		//rightSection.getChildren().add(test);
@@ -72,6 +76,8 @@ public class Main extends Application {
 		
 		// home navigatior
 		rightSection.getChildren().get(5).setVisible(false);
+		rightSection.getChildren().get(6).setVisible(false);
+
 		
 		//Test page visible
 		

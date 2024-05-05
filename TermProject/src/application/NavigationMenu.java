@@ -1,7 +1,6 @@
 package application;
 
 import java.util.function.Consumer;
-
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
@@ -11,6 +10,7 @@ public class NavigationMenu extends VBox{
 	private Button button_NewAsset;
 	private Button button_Management;
 	private Button button_Reports;
+	private Button button_ExpAsset;
 	
 	public NavigationMenu(Consumer<String> choice) {
         super(50); // spacing parameter 30
@@ -20,6 +20,7 @@ public class NavigationMenu extends VBox{
     	button_NewAsset = navigationButton("New Asset");
     	button_Management = navigationButton("Manage Asset");
     	button_Reports = navigationButton("Reports");
+    	button_ExpAsset = navigationButton("Expired Assets");
         
         initialize();
         buttonAction(choice);
@@ -30,7 +31,7 @@ public class NavigationMenu extends VBox{
         this.setStyle("-fx-background-color: rgba(100, 90, 150, 0.7); -fx-padding: 30;");
         this.setMinSize(240, 600);
         // Add buttons to the VBox
-        this.getChildren().addAll(button_NewCategory, button_NewLocation, button_NewAsset, button_Management, button_Reports);
+        this.getChildren().addAll(button_NewCategory, button_NewLocation, button_NewAsset, button_Management, button_Reports, button_ExpAsset);
     }
     
     // set action for button
@@ -40,6 +41,7 @@ public class NavigationMenu extends VBox{
         button_NewAsset.setOnAction(e -> choice.accept("New Asset Page"));
         button_Management.setOnAction(e -> choice.accept("Asset Management"));
         button_Reports.setOnAction(e -> choice.accept("Reports Page"));
+        button_ExpAsset.setOnAction(e -> choice.accept("Expired Assets"));
         // ... set actions for all 5 buttons ...
     }
     

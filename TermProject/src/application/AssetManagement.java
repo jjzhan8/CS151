@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import model.Asset;
 import model.Category;
 import model.Location;
+import application.NewAsset;
+
 
 
 public class AssetManagement extends VBox implements LayoutHelper {
@@ -125,11 +127,11 @@ private void editAsset() {
     TextField nameField = new TextField(selectedAsset.getName());
     ComboBox<String> categoryField = new ComboBox<>();
     categoryField.getItems().addAll("Category1", "Category2");
-    categoryField.setValue(selectedAsset.getCategory().getName());
+    categoryField.setValue(selectedAsset.getCategory().toString());
 
     ComboBox<String> locationField = new ComboBox<>();
     locationField.getItems().addAll("Location1", "Location2");
-    locationField.setValue(selectedAsset.getLocation().getName());
+    locationField.setValue(selectedAsset.getLocation().toString());
 
     DatePicker purchaseDateField = new DatePicker(selectedAsset.getPurchaseDate());
 
