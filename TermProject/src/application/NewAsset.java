@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBoxBase;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -79,12 +80,19 @@ public class NewAsset extends VBox implements LayoutHelper{
 		
 		
 		//category.get(category).getClass().getName();
+		//ComboBox category = (ComboBox) layout.get(2).lookup("#choice");
+		//System.out.print("Type = " + (String) (((ComboBox) (layout.get(2).lookup("#choice"))).getValue()));
+		//asset.setCategoryName((String) ((ComboBox) layout.get(2)).getValue());
 		
-		asset.setCategoryName((String) (((ComboBox) layout.get(2).lookup("#choice")).getValue()));
+		asset.setCategory(Category.category.get((String) (((ComboBox) (layout.get(2).lookup("#choice"))).getValue())));
+		
+		asset.setCategoryName((String) (((ComboBox) (layout.get(2).lookup("#choice"))).getValue()));
 		//asset.setCategory(category.);
 		//asset.setCategoryName(category.get(((ComboBox<String>) layout.get(2).lookup("#choice")).getUserData().getClass().getName()));
 		
-		asset.setLocName((String) (((ComboBox) layout.get(3).lookup("#choice")).getValue()));
+		asset.setLocation(Location.location.get((String) (((ComboBox) (layout.get(3).lookup("#choice"))).getValue())));
+		
+		asset.setLocName((String) (((ComboBox) (layout.get(3).lookup("#choice"))).getValue()));
 		
 		//asset.setPurchaseDate();
 		//purchase date as LocalDate

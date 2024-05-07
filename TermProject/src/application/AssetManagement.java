@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -25,6 +27,8 @@ import application.NewAsset;
 public class AssetManagement extends VBox implements LayoutHelper {
 
     private final String csvFilePath = "asset.csv";
+	private final String catFile = "category.csv";
+	private final String locFile = "location.csv";
     private TextField searchField;
     private TableView<Asset> assetTable;
 
@@ -36,6 +40,9 @@ public class AssetManagement extends VBox implements LayoutHelper {
 
         super(30);   //spacing 30
         super.setPadding(new Insets(40, 40, 40, 40));
+        
+		getCategories(Category.category);
+		getLocations(Location.location);
 
         layout = new ArrayList<HBox>();
         
@@ -54,14 +61,27 @@ public class AssetManagement extends VBox implements LayoutHelper {
         
         Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(e -> deleteAsset());
+    	
+        ComboBox cateCombo_box = new ComboBox(FXCollections.observableArrayList(Category.category.keySet()));
+    	cateCombo_box.setPromptText("Select a Location");
+
+        ComboBox locCombo_box = new ComboBox(FXCollections.observableArrayList(Location.location.keySet()));
+        locCombo_box.setPromptText("Select a Category");
         
-        HBox buttonBox = new HBox(10, searchField, searchButton, editButton, deleteButton);
+        HBox buttonBox = new HBox(10, searchField, searchButton, editButton, deleteButton, cateCombo_box, locCombo_box);
         
         // TableView to display search results
         assetTable = new TableView<>();
         initializeTable();
         
         this.getChildren().addAll(buttonBox, assetTable);
+        if ((((ComboBox) locCombo_box.lookup("#choice"))) != null) {
+            locationFindAsset(locCombo_box);
+        }
+        
+        if ((((ComboBox) cateCombo_box.lookup("#choice"))) != null) {
+            categoryFindAsset(cateCombo_box);
+        }
     }
 
     private void initializeTable() {
@@ -215,6 +235,28 @@ private void editAsset() {
 
         
     }
+    
+    private void locationFindAsset(ComboBox locCombo_box) {
+		 String partiLoc = (String) (((ComboBox) locCombo_box.lookup("#choice")).getValue());
+
+    	 List<Asset> assets = loadAssetsFromCsv();
+         List<Asset> matchingAssets = assets.stream()
+                 .filter(asset -> asset.getLocation().equals(partiLoc))
+                 .collect(Collectors.toList());
+        
+         assetTable.getItems().setAll(matchingAssets);
+    }
+    
+    private void categoryFindAsset(ComboBox cateCombo_box) {
+		 String partiCat = (String) (((ComboBox) cateCombo_box.lookup("#choice")).getValue());
+
+    	 List<Asset> assets = loadAssetsFromCsv();
+         List<Asset> matchingAssets = assets.stream()
+                 .filter(asset -> asset.getLocation().equals(partiCat))
+                 .collect(Collectors.toList());
+        
+         assetTable.getItems().setAll(matchingAssets);
+    }
 
     private List<Asset> loadAssetsFromCsv() {
         List<Asset> assets = new ArrayList<>();
@@ -281,5 +323,50 @@ private void editAsset() {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+    
+    private HashMap<String, Category> getCategories(HashMap<String, Category> catMap) {
+        try {
+            if (Files.exists(Paths.get(catFile))) {
+                List<String> lines = Files.readAllLines(Paths.get(catFile));
+                for (String line : lines.subList(1, lines.size())) {
+                    String[] parts = line.split(","); // Ensure parsing is robust
+                    if (parts.length == 1) { // Ensure required data fields
+                        Category cat = new Category();
+                        cat.setName(parts[0]);
+                        catMap.put(cat.toString(), cat);
+                    }
+                }
+            }
+        } catch (IOException ex) {
+
+            showAlert(AlertType.ERROR, "Error", "File Read Error", "Unable to read assets from CSV.");
+
+        }
+        
+        return catMap;
+}
+
+    private HashMap<String, Location> getLocations(HashMap<String, Location> catMap) { //change location and string
+        try {
+            if (Files.exists(Paths.get(locFile))) {
+                List<String> lines = Files.readAllLines(Paths.get(locFile));
+                for (String line : lines.subList(1, lines.size())) {
+                    String[] parts = line.split(","); // Ensure parsing is robust
+                    if (parts.length == 2) { // Ensure required data fields
+                        Location loc = new Location();
+                        loc.setName(parts[0]);
+                        loc.setDescription(parts[1]);
+                        catMap.put(loc.toString(), loc);
+                    }
+                }
+            }
+        } catch (IOException ex) {
+
+            showAlert(AlertType.ERROR, "Error", "File Read Error", "Unable to read assets from CSV.");
+
+        }
+        
+        return catMap;
     }
 }
