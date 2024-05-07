@@ -93,8 +93,8 @@ public class Asset extends General_Info implements DataProcess {
 
 	public String saveToCsv() {
 		String res;
-		res = new String(this.getName() + "," + this.getCategory().getName() + ","
-				+ this.getLocation().getName() + "," + this.getPurchaseDate().toString() + "," + this.getDescription() + "," + this.getPurchaseValue()
+		res = new String(this.getName() + "," + this.getCategory().toString() + ","
+				+ this.getLocation().toString() + "," + this.getPurchaseDate().toString() + "," + this.getDescription() + "," + this.getPurchaseValue()
 				+ "," + (this.getWarrantyExpDate()).toString());
 
 		return res;
