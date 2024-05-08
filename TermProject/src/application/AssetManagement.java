@@ -145,12 +145,10 @@ private void editAsset() {
 
     // Text fields for asset details
     TextField nameField = new TextField(selectedAsset.getName());
-    ComboBox<String> categoryField = new ComboBox<>();
-    categoryField.getItems().addAll("Category1", "Category2");
+    ComboBox<String> categoryField = new ComboBox<>(FXCollections.observableArrayList(Category.category.keySet()));
     categoryField.setValue(selectedAsset.getCategory().toString());
 
-    ComboBox<String> locationField = new ComboBox<>();
-    locationField.getItems().addAll("Location1", "Location2");
+    ComboBox<String> locationField = new ComboBox<>(FXCollections.observableArrayList(Location.location.keySet()));
     locationField.setValue(selectedAsset.getLocation().toString());
 
     DatePicker purchaseDateField = new DatePicker(selectedAsset.getPurchaseDate());

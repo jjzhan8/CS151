@@ -84,15 +84,17 @@ public class ExpiredAsset extends VBox implements LayoutHelper {
     }
     
     //Search the asset
-    private void searchAssets() {
-		String partiLocation = (String) (((ComboBox) layout.get(2).lookup("#choice")).getValue());
-		
+    private void searchAssets() {		
         List<Asset> assets = loadAssetsFromCsv();
         List<Asset> matchingAssets = assets.stream()
-                .filter(asset -> asset.getLocation().toString().equals(partiLocation))
+                .filter(asset -> asset.getWarrantyExpDate().isBefore(LocalDate.now()))
                 .collect(Collectors.toList());
        
-        assetTable.getItems().setAll(matchingAssets);
+        if (matchingAssets.isEmpty()) {
+        	showAlert(AlertType.ERROR, "Error", "No Expired Assets", "You have no expired assets");
+        } else {
+            assetTable.getItems().setAll(matchingAssets);
+        }
     }
     
     private List<Asset> loadAssetsFromCsv() {
