@@ -133,7 +133,7 @@ public interface LayoutHelper {
 	 * @param list
 	 * @return
 	 */
-	public default <E> HBox createDropdownList(String arg, HashMap<Category, String> list) {
+	public default <E> HBox createDropdownList(String arg, HashMap<String, Category> list) {
 		// redAsterisk
 		HBox res = new HBox();
 
@@ -145,8 +145,8 @@ public interface LayoutHelper {
 		comboBox.setId("choice");
 		comboBox.setPrefWidth(180);
 		
-		for(Category itr: list.keySet()) {
-			comboBox.getItems().add(itr.toString());
+		for(String itr: list.keySet()) {
+			comboBox.getItems().add(itr);
 		}
 		
 		res.getChildren().addAll(redAsterisk(), createLabel(arg), comboBox);
@@ -154,7 +154,7 @@ public interface LayoutHelper {
 		return res;
 	}
 	
-	public default <E> HBox createLocDropdownList(String arg, HashMap<Location, String> locMap) {
+	public default <E> HBox createLocDropdownList(String arg, HashMap<String, Location> locMap) {
 		// redAsterisk
 		HBox res = new HBox();
 
@@ -166,8 +166,8 @@ public interface LayoutHelper {
 		comboBox.setId("choice");
 		comboBox.setPrefWidth(180);
 		
-		for(Location itr: locMap.keySet()) {
-			comboBox.getItems().add(itr.toString());
+		for(String itr: locMap.keySet()) {
+			comboBox.getItems().add(itr);
 		}
 		
 		res.getChildren().addAll(redAsterisk(), createLabel(arg), comboBox);

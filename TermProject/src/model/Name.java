@@ -14,6 +14,7 @@ public class Name {
 	public void setName(String arg) {
 		this.name = arg;
 	}
+	
 	public String getName() {
 		return name;
 	}

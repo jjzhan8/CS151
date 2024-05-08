@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBoxBase;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -32,8 +33,6 @@ public class NewAsset extends VBox implements LayoutHelper{
 	 */
 	private Asset asset = new Asset();
 	
-	private HashMap<Category, String> category = new HashMap<Category, String>();
-	private HashMap<Location, String> location = new HashMap<Location, String>();
 	private final String catFile = "category.csv";
 	private final String locFile = "location.csv";
 	private final String file = "asset.csv";
@@ -54,13 +53,13 @@ public class NewAsset extends VBox implements LayoutHelper{
 		super.setPadding(new Insets(40, 40, 40, 40));
 		
 		layout = new ArrayList<HBox>();
-		getCategories(category);
-		getLocations(location);
+		getCategories(Category.category);
+		getLocations(Location.location);
 		
         layout.add(createTitle(title));
         layout.add(createTextFieldLine(line1, true));
-        layout.add(createDropdownList(line2, category));
-        layout.add(createLocDropdownList(line3, location));
+        layout.add(createDropdownList(line2, Category.category));
+        layout.add(createLocDropdownList(line3, Location.location));
         layout.add(createDatePicker(line4));
         layout.add(createTextAreaLine(line5));
         layout.add(createTextFieldLine(line6));
@@ -81,12 +80,19 @@ public class NewAsset extends VBox implements LayoutHelper{
 		
 		
 		//category.get(category).getClass().getName();
+		//ComboBox category = (ComboBox) layout.get(2).lookup("#choice");
+		//System.out.print("Type = " + (String) (((ComboBox) (layout.get(2).lookup("#choice"))).getValue()));
+		//asset.setCategoryName((String) ((ComboBox) layout.get(2)).getValue());
 		
-		asset.setCategoryName((String) (((ComboBox) layout.get(2).lookup("#choice")).getValue()));
+		asset.setCategory(Category.category.get((String) (((ComboBox) (layout.get(2).lookup("#choice"))).getValue())));
+		
+		asset.setCategoryName((String) (((ComboBox) (layout.get(2).lookup("#choice"))).getValue()));
 		//asset.setCategory(category.);
 		//asset.setCategoryName(category.get(((ComboBox<String>) layout.get(2).lookup("#choice")).getUserData().getClass().getName()));
 		
-		asset.setLocName((String) (((ComboBox) layout.get(3).lookup("#choice")).getValue()));
+		asset.setLocation(Location.location.get((String) (((ComboBox) (layout.get(3).lookup("#choice"))).getValue())));
+		
+		asset.setLocName((String) (((ComboBox) (layout.get(3).lookup("#choice"))).getValue()));
 		
 		//asset.setPurchaseDate();
 		//purchase date as LocalDate
@@ -172,8 +178,7 @@ public class NewAsset extends VBox implements LayoutHelper{
 		}
 	}
 	
-	private HashMap<Category, String> getCategories(HashMap<Category, String> catMap) {
-		String blank = "";
+	private HashMap<String, Category> getCategories(HashMap<String, Category> catMap) {
 	        try {
 	            if (Files.exists(Paths.get(catFile))) {
 	                List<String> lines = Files.readAllLines(Paths.get(catFile));
@@ -182,7 +187,7 @@ public class NewAsset extends VBox implements LayoutHelper{
 	                    if (parts.length == 1) { // Ensure required data fields
 	                        Category cat = new Category();
 	                        cat.setName(parts[0]);
-	                        catMap.put(cat, blank);
+	                        catMap.put(cat.toString(), cat);
 	                    }
 	                }
 	            }
@@ -195,8 +200,7 @@ public class NewAsset extends VBox implements LayoutHelper{
 	        return catMap;
 	}
 	
-	private HashMap<Location, String> getLocations(HashMap<Location, String> catMap) {
-		String blank = "";
+	private HashMap<String, Location> getLocations(HashMap<String, Location> catMap) { //change location and string
 	        try {
 	            if (Files.exists(Paths.get(locFile))) {
 	                List<String> lines = Files.readAllLines(Paths.get(locFile));
@@ -206,7 +210,7 @@ public class NewAsset extends VBox implements LayoutHelper{
 	                        Location loc = new Location();
 	                        loc.setName(parts[0]);
 	                        loc.setDescription(parts[1]);
-	                        catMap.put(loc, blank);
+	                        catMap.put(loc.toString(), loc);
 	                    }
 	                }
 	            }

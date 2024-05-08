@@ -5,16 +5,16 @@ public class General_Info extends Name{
 	
 	public General_Info() {
 		super("");
-		this.setDesciption("");
+		this.setDescription("");
 	}
 	
 	public General_Info(String argN, String argD) {
 		// first argument: name		second argument: description
 		super(argN);
-		this.setDesciption(argD);
+		this.setDescription(argD);
 	}
 	//accessor & mutator
-	public void setDesciption(String arg) {
+	public void setDescription(String arg) {
 		description = arg;
 	}
 	public String getDescription() {
