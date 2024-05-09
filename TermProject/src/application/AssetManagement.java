@@ -304,10 +304,10 @@ private void editAsset() {
             
             // Show a success message
             
-            Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Success");
-			alert.setContentText("Asset saved successfully.");
-			alert.showAndWait();
+           // Alert alert = new Alert(AlertType.INFORMATION);
+			//alert.setHeaderText("Success");
+			//alert.setContentText("Asset saved successfully.");
+			//alert.showAndWait();
 
         } catch (IOException ex) {
             showAlert(AlertType.ERROR, "Error", "File Write Error", "Unable to save assets to CSV");
