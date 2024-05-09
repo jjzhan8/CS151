@@ -57,7 +57,7 @@ public class Main extends Application {
 		HBox mainBkgd = new HBox();
 		mainBkgd.getChildren().addAll(rightSection, navigationMenu);
 
-		Scene scene = new Scene(mainBkgd, 800, 600);
+		Scene scene = new Scene(mainBkgd, 928, 700);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle(appName);
 		primaryStage.show();
