@@ -251,7 +251,7 @@ public interface LayoutHelper {
 	 * @param arg
 	 * @param itr: represent which line is TextField
 	 */
-	public default void clearButtonAction(ArrayList<HBox> arg, int...itr) {
+	public default void clearButtonAction(ArrayList<HBox> arg) {
 		((Button)arg.get(arg.size() - 1).getChildren().get(1)).setOnAction(e -> {
 				clearTextField((TextField)arg.get(1).lookup("#text"));
 				clearComboBox((ComboBox)arg.get(2).lookup("#choice"));

@@ -70,7 +70,7 @@ public class NewAsset extends VBox implements LayoutHelper{
         ((TextField)layout.get(6).lookup("#text")).setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
         
 		initialize(this, layout);
-		clearButtonAction(layout, 1, 5, 6);
+		clearButtonAction(layout);
 		buttonAction(layout);
 	}
 	
