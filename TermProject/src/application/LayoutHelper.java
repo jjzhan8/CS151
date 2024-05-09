@@ -253,7 +253,6 @@ public interface LayoutHelper {
 	 */
 	public default void clearButtonAction(ArrayList<HBox> arg, int...itr) {
 		((Button)arg.get(arg.size() - 1).getChildren().get(1)).setOnAction(e -> {
-			for(int i : itr) {
 				clearTextField((TextField)arg.get(1).lookup("#text"));
 				clearComboBox((ComboBox)arg.get(2).lookup("#choice"));
 				clearComboBox((ComboBox)arg.get(3).lookup("#choice"));
@@ -261,7 +260,6 @@ public interface LayoutHelper {
 				clearTextArea((TextArea)arg.get(5).lookup("#text"));
 				clearTextField((TextField)arg.get(6).lookup("#text"));
 				clearDatePicker((DatePicker)arg.get(7).lookup("#date"));
-			}
 		});
 	}
 	/**
