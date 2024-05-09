@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -231,6 +232,20 @@ public interface LayoutHelper {
 			itr.clear();
 		}
 	}
+	
+	public default void clearDatePicker(DatePicker...arg) {
+		for (DatePicker itr : arg) {
+			itr.setValue(null);
+		}
+	}
+	
+	public default void clearComboBox(ComboBox...arg) {
+		for (ComboBox itr : arg) {
+			itr.getSelectionModel().clearSelection();
+			itr.setValue(null);
+		}
+	}
+	
 	/**
 	 * Set action for clear Button
 	 * @param arg
@@ -239,7 +254,13 @@ public interface LayoutHelper {
 	public default void clearButtonAction(ArrayList<HBox> arg, int...itr) {
 		((Button)arg.get(arg.size() - 1).getChildren().get(1)).setOnAction(e -> {
 			for(int i : itr) {
-				clearTextField((TextField)arg.get(i).lookup("#text"));
+				clearTextField((TextField)arg.get(1).lookup("#text"));
+				clearComboBox((ComboBox)arg.get(2).lookup("#choice"));
+				clearComboBox((ComboBox)arg.get(3).lookup("#choice"));
+				clearDatePicker((DatePicker)arg.get(4).lookup("#date"));
+				clearTextArea((TextArea)arg.get(5).lookup("#text"));
+				clearTextField((TextField)arg.get(6).lookup("#text"));
+				clearDatePicker((DatePicker)arg.get(7).lookup("#date"));
 			}
 		});
 	}
