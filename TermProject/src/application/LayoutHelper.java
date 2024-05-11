@@ -273,10 +273,8 @@ public interface LayoutHelper {
 		((Button)arg.get(arg.size() - 1).getChildren().get(1)).setOnAction(e -> {
 				clearTextField((TextField)arg.get(1).lookup("#text"));
 				clearTextArea((TextArea)arg.get(2).lookup("#text"));
-      
 		});
 	}
-  
 	/**
 	 * This is Label to represent that line can not be empty.
 	 * @return
