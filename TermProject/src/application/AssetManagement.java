@@ -254,7 +254,7 @@ private void editAsset() {
         
          if (matchingAssets.isEmpty()) {
         	assetTable.getItems().clear();
-         	showAlert(AlertType.ERROR, "Error", "No Expired Assets", "You have no expired assets");
+         	showAlert(AlertType.INFORMATION, "Info", "No Matches Found", "You have no assets that match both of these filters!");
          } else {
              assetTable.getItems().setAll(matchingAssets);
          }
@@ -270,7 +270,7 @@ private void editAsset() {
         
          if (matchingAssets.isEmpty()) {
         	 assetTable.getItems().clear();
-         	showAlert(AlertType.ERROR, "Error", "No Expired Assets", "You have no expired assets");
+         	 showAlert(AlertType.INFORMATION, "Info", "No Matches Found", "You have no assets that match both of these filters!");
          } else {
              assetTable.getItems().setAll(matchingAssets);
          }
