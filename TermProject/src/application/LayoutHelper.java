@@ -262,6 +262,21 @@ public interface LayoutHelper {
 				clearDatePicker((DatePicker)arg.get(7).lookup("#date"));
 		});
 	}
+	
+	public default void clearCatButtonAction(ArrayList<HBox> arg) {
+		((Button)arg.get(arg.size() - 1).getChildren().get(1)).setOnAction(e -> {
+				clearTextField((TextField)arg.get(1).lookup("#text"));
+		});
+	}
+	
+	public default void clearLocButtonAction(ArrayList<HBox> arg) {
+		((Button)arg.get(arg.size() - 1).getChildren().get(1)).setOnAction(e -> {
+				clearTextField((TextField)arg.get(1).lookup("#text"));
+				clearTextArea((TextArea)arg.get(2).lookup("#text"));
+      
+		});
+	}
+  
 	/**
 	 * This is Label to represent that line can not be empty.
 	 * @return

@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.event.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -63,9 +64,11 @@ public class AssetManagement extends VBox implements LayoutHelper {
         deleteButton.setOnAction(e -> deleteAsset());
     	
         ComboBox cateCombo_box = new ComboBox(FXCollections.observableArrayList(Category.category.keySet()));
+        cateCombo_box.getSelectionModel().select(0);
     	cateCombo_box.setPromptText("Select a Location");
 
         ComboBox locCombo_box = new ComboBox(FXCollections.observableArrayList(Location.location.keySet()));
+        locCombo_box.getSelectionModel().select(0);
         locCombo_box.setPromptText("Select a Category");
         
         HBox buttonBox = new HBox(10, searchField, searchButton, editButton, deleteButton, cateCombo_box, locCombo_box);
@@ -75,13 +78,20 @@ public class AssetManagement extends VBox implements LayoutHelper {
         initializeTable();
         
         this.getChildren().addAll(buttonBox, assetTable);
-        if ((((ComboBox) locCombo_box.lookup("#choice"))) != null) {
-            locationFindAsset(locCombo_box);
-        }
+        /*EventHandler<ActionEvent> locSelect = new EventHandler<ActionEvent>() {
+        	public void handle (ActionEvent e) {
+                locationFindAsset(locCombo_box);
+        	}
+        };
+        locCombo_box.setOnAction(locSelect);
         
-        if ((((ComboBox) cateCombo_box.lookup("#choice"))) != null) {
-            categoryFindAsset(cateCombo_box);
-        }
+        EventHandler<ActionEvent> catSelect = new EventHandler<ActionEvent>() {
+        	public void handle (ActionEvent e) {
+                categoryFindAsset(cateCombo_box);
+        	}
+        };
+        cateCombo_box.setOnAction(catSelect);*/
+        
     }
 
     private void initializeTable() {
@@ -235,25 +245,33 @@ private void editAsset() {
     }
     
     private void locationFindAsset(ComboBox locCombo_box) {
-		 String partiLoc = (String) (((ComboBox) locCombo_box.lookup("#choice")).getValue());
+		 String partiLoc = (String) (((ComboBox) (locCombo_box.lookup("#choice"))).getValue());
 
     	 List<Asset> assets = loadAssetsFromCsv();
          List<Asset> matchingAssets = assets.stream()
                  .filter(asset -> asset.getLocation().equals(partiLoc))
                  .collect(Collectors.toList());
         
-         assetTable.getItems().setAll(matchingAssets);
+         if (matchingAssets.isEmpty()) {
+         	showAlert(AlertType.ERROR, "Error", "No Expired Assets", "You have no expired assets");
+         } else {
+             assetTable.getItems().setAll(matchingAssets);
+         }
     }
     
     private void categoryFindAsset(ComboBox cateCombo_box) {
-		 String partiCat = (String) (((ComboBox) cateCombo_box.lookup("#choice")).getValue());
+		 String partiCat = (String) (((ComboBox) (cateCombo_box.lookup("#choice"))).getValue());
 
     	 List<Asset> assets = loadAssetsFromCsv();
          List<Asset> matchingAssets = assets.stream()
                  .filter(asset -> asset.getLocation().equals(partiCat))
                  .collect(Collectors.toList());
         
-         assetTable.getItems().setAll(matchingAssets);
+         if (matchingAssets.isEmpty()) {
+         	showAlert(AlertType.ERROR, "Error", "No Expired Assets", "You have no expired assets");
+         } else {
+             assetTable.getItems().setAll(matchingAssets);
+         }
     }
 
     private List<Asset> loadAssetsFromCsv() {

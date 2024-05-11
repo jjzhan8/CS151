@@ -34,7 +34,7 @@ public class NewCategory extends VBox implements LayoutHelper {
 
 		initialize(this, layout);
 		
-		clearButtonAction(layout, 1);
+		clearCatButtonAction(layout);
 		buttonAction(layout);
 		
 	}
@@ -53,6 +53,7 @@ public class NewCategory extends VBox implements LayoutHelper {
 			} else {
 				// Save the category name to a .csv file
 				category.setName(name);
+				Category.category.put(name, category);
 				saveCategoryToCsv();
 				//clear TextField
 				clearTextField((TextField)arg.get(1).lookup("#text"));

@@ -39,7 +39,7 @@ public class NewLocation extends VBox implements LayoutHelper{
 		
 		initialize(this, layout);
 		
-		clearButtonAction(layout, 1, 2);
+		clearLocButtonAction(layout);
 		buttonAction(layout);
 	}
 	
@@ -62,6 +62,7 @@ public class NewLocation extends VBox implements LayoutHelper{
 				// Save the category name to a .csv file
 				this.getInfo();
 				saveToCsv();
+				Location.location.put(name, location);
 				//clear TextField
 				clearTextField((TextField)arg.get(1).lookup("#text"));
 				clearTextArea((TextArea)arg.get(2).lookup("#text"));
