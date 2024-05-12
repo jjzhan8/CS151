@@ -1,6 +1,6 @@
 Asset Name,Category,Location,Purchase Date,Description,Purchase Value,Warranty Exp Date
 penguin,example category,example location,2024-04-18,cute animal,10.0,2024-04-29
-Sneakers,	Clothing,	kitchen,	2024-04-06,	My shoes,	5.5,	2024-01-05
-T-shirt,	Clothing,	bedroom,	2024-03-06	My shirt	15.5	2023-07-07
-Clock,	Furniture,	bedroom,	2023-12-31,	To remind me when to wake up,	6.5,	2021-03-30
-TV set,	Furniture,	living room,	2022-08-15, For entertainment,	926.5,	2026-06-03
+Sneakers,Clothing,kitchen,2024-04-06,My shoes,5.5,2024-01-05
+T-shirt,Clothing,bedroom,2024-03-06,My shirt,15.5,2023-07-07
+Clock,Furniture,bedroom,2023-12-31,To remind me when to wake up,6.5,2021-03-30
+TV set,Furniture,living room,2022-08-15,For entertainment,926.5,2026-06-03
