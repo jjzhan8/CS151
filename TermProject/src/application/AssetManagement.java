@@ -63,6 +63,9 @@ public class AssetManagement extends VBox implements LayoutHelper {
         
         Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(e -> deleteAsset());
+        
+        getCategories(Category.category);
+		getLocations(Location.location);
     	
         ComboBox cateCombo_box = new ComboBox(FXCollections.observableArrayList(Category.category.keySet()));
     	cateCombo_box.setPromptText("Select a Location");
@@ -76,6 +79,9 @@ public class AssetManagement extends VBox implements LayoutHelper {
         assetTable = new TableView<>();
         initializeTable();
         
+        getCategories(Category.category);
+		getLocations(Location.location);
+		
         this.getChildren().addAll(buttonBox, assetTable);
         EventHandler<ActionEvent> locSelect = new EventHandler<ActionEvent>() {
         	public void handle (ActionEvent e) {
