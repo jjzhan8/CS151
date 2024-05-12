@@ -25,7 +25,7 @@ import application.NewAsset;
 public class ExpiredAsset extends VBox implements LayoutHelper {
 
     private final String csvFilePath = "asset.csv";
-    private TextField searchField;
+    //private TextField searchField;
     private TableView<Asset> assetTable;
 
     private ArrayList<HBox> layout;
@@ -43,13 +43,13 @@ public class ExpiredAsset extends VBox implements LayoutHelper {
         layout.add(createTextFieldLine(line1, true));
 
         // UI components for search and buttons
-        searchField = new TextField();
-        searchField.setPromptText("Enter asset name to search");
+        //searchField = new TextField();
+        //searchField.setPromptText("Enter asset name to search");
         
         Button searchButton = new Button("Expired Assets");
         searchButton.setOnAction(e -> searchAssets());
         
-        HBox buttonBox = new HBox(10, searchField, searchButton);
+        HBox buttonBox = new HBox(10, searchButton);
         
         // TableView to display search results
         assetTable = new TableView<>();
