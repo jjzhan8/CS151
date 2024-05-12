@@ -1,4 +1,6 @@
 Asset Name,Category,Location,Purchase Date,Description,Purchase Value,Warranty Exp Date
-book,harry potter,example category,example location,2024-04-25,10.0,2024-04-25
-book,harry potter,example category,example location,2024-04-18,10.0,2024-04-26
-book,haryr,example category,example location,2024-04-11,10.0,2024-04-27
+printer,Electronics,living room,2018-03-29,Personal printer,400.0,2024-04-30
+Macbook Air,Electronics,kitchen,2022-04-02,My macbook,$1350.0,2024-04-21
+New Balance Shoes,shoes,bedroom,2019-05-01,my casual shoes,$199.0,2022-07-10
+Airpod Pro,Electronics,bedroom,2024-03-13,my custom airpod,$234.0,2025-03-13
+Jordan 1s,shoes,bedroom,2023-04-30,in the closest,$800.0,2028-06-20
